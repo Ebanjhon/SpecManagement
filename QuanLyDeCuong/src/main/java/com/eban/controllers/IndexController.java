@@ -33,11 +33,11 @@ public class IndexController {
     
     // goi cac service
     @Autowired
-//    private SubjectService subjectService;
+    private SubjectService subjectService;
 
     // cac du lieu se duoc dung chung
     @ModelAttribute
     public void commonAttr(Model model) {
-//        model.addAttribute("subs", this.subjectService.getSubjects());
+        model.addAttribute("subs", this.subjectService.getSubjects());
     }
 }
