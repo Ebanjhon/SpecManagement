@@ -6,11 +6,12 @@ package com.eban.repositories;
 
 import com.eban.pojo.Specification;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Admin
  */
 public interface SpecRepocitory {
-    List<Specification> getListSpec();
+    List<Specification> getListSpec(Map<String, String> params);
 }

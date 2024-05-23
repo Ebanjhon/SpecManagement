@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 
 <div style="display: flex;flex-direction: column ; align-items: center; width: 100%">
-    <h3>Danh sách môn học</h3>
+    <h3>Them Mon hoc</h3>
 
     <c:url value="/subjects" var="action" />
     <form:form method="post" action="${action}" modelAttribute="sub" style="width: 100%" accept-charset="UTF-8">
@@ -31,10 +31,12 @@
             </button>
         </div>
     </form:form>
-
-    <table class="table table-striped">
+   <hr class="hr" />
+    <!--danh sach-->
+    <h3>Danh sách môn học</h3>
+    <table class="table table-striped" style="width: 100%">
         <thead>
-            <tr>
+            <tr style="text-align: center">
                 <th scope="col">ID</th>
                 <th scope="col">Tên Môn Học</th>
                 <th scope="col">Cập nhật/xóa</th>
@@ -42,7 +44,7 @@
         </thead>
         <tbody>
             <c:forEach items="${subs}" var="s">
-                <tr>
+                <tr style="text-align: center">
                     <td>${s.idSubject}</td>
                     <td>${s.nameSubject}</td>
                     <td>

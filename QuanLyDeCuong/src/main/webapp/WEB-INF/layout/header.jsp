@@ -28,6 +28,7 @@
                         <li><a class="dropdown-item" href="<c:url value="/accounts" />">Quản lý tài khoản</a></li>
                     </ul>
                 </li>
+                <li><a href="#" class="nav-link px-2 text-white">Thong ke</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">About US</a></li>
             </ul>
 

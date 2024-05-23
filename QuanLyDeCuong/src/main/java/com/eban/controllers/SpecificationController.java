@@ -18,4 +18,5 @@ public class SpecificationController {
     public String viewDeCuong() {
         return "specifications";
     }
+    
 }

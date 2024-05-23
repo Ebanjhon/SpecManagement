@@ -28,17 +28,17 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Coursestudy getCourseById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.CourseRepo.getCourseById(id);
     }
 
     @Override
     public void createOrUpdate(Coursestudy khoaHoc) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.CourseRepo.createOrUpdate(khoaHoc);
     }
 
     @Override
     public void deleteCourse(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.CourseRepo.deleteCourse(id);
     }
 
 }

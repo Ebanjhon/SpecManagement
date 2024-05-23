@@ -4,6 +4,7 @@
  */
 package com.eban.controllers;
 
+import com.eban.pojo.Specification;
 import com.eban.pojo.Subject;
 import com.eban.services.CourseService;
 import com.eban.services.SpecService;
@@ -49,10 +50,11 @@ public class IndexController {
 
     // cac du lieu se duoc dung chung
     @ModelAttribute
-    public void commonAttr(Model model) {
+    public void commonAttr(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("subs", this.subjectService.getSubjects());
         model.addAttribute("courses", this.coursService.getListCourse());
-        model.addAttribute("specs", this.specService.getListSpec());
+        model.addAttribute("specs", this.specService.getListSpec(params));
         model.addAttribute("teachers", this.userService.getListTeacher());
+        model.addAttribute("spec", new Specification());
     }
 }

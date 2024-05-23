@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Admin
+ * @author eban
  */
 @Entity
 @Table(name = "gradingsheet")

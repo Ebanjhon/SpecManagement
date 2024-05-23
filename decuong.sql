@@ -31,7 +31,7 @@ CREATE TABLE `HoiDong` (
   KEY `thuKyID` (`thuKyID`),
   CONSTRAINT `HoiDong_ibfk_1` FOREIGN KEY (`chuTichID`) REFERENCES `user` (`idUser`),
   CONSTRAINT `HoiDong_ibfk_2` FOREIGN KEY (`thuKyID`) REFERENCES `user` (`idUser`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `HoiDong` (
 
 LOCK TABLES `HoiDong` WRITE;
 /*!40000 ALTER TABLE `HoiDong` DISABLE KEYS */;
+INSERT INTO `HoiDong` VALUES (1,2,3);
 /*!40000 ALTER TABLE `HoiDong` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +121,7 @@ CREATE TABLE `coursestudy` (
   KEY `specID` (`specID`),
   CONSTRAINT `coursestudy_ibfk_1` FOREIGN KEY (`teacherID`) REFERENCES `user` (`idUser`),
   CONSTRAINT `coursestudy_ibfk_2` FOREIGN KEY (`specID`) REFERENCES `specification` (`idSpec`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,6 +130,7 @@ CREATE TABLE `coursestudy` (
 
 LOCK TABLES `coursestudy` WRITE;
 /*!40000 ALTER TABLE `coursestudy` DISABLE KEYS */;
+INSERT INTO `coursestudy` VALUES (3,'Toán ',2,2);
 /*!40000 ALTER TABLE `coursestudy` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,7 +269,7 @@ CREATE TABLE `specification` (
   CONSTRAINT `specification_ibfk_2` FOREIGN KEY (`subjectID`) REFERENCES `subject` (`idSubject`) ON DELETE CASCADE,
   CONSTRAINT `specification_ibfk_3` FOREIGN KEY (`typeSpecID`) REFERENCES `typeofspecifi` (`idType`) ON DELETE CASCADE,
   CONSTRAINT `specification_chk_1` CHECK (((`credit` >= 2) and (`credit` <= 4)))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -276,6 +278,7 @@ CREATE TABLE `specification` (
 
 LOCK TABLES `specification` WRITE;
 /*!40000 ALTER TABLE `specification` DISABLE KEYS */;
+INSERT INTO `specification` VALUES (2,'Đê cương môn toán',2,4,'abc',2,'2024-05-22 17:00:00',1.00,1,'',1,'none'),(3,'ádasdasd',2,3,'sdfsdf',3,'2024-05-22 17:00:00',1.00,2,'',1,'none');
 /*!40000 ALTER TABLE `specification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,7 +293,7 @@ CREATE TABLE `subject` (
   `idSubject` int NOT NULL AUTO_INCREMENT,
   `nameSubject` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`idSubject`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,7 +302,7 @@ CREATE TABLE `subject` (
 
 LOCK TABLES `subject` WRITE;
 /*!40000 ALTER TABLE `subject` DISABLE KEYS */;
-INSERT INTO `subject` VALUES (1,'Math'),(2,'Science'),(3,'History');
+INSERT INTO `subject` VALUES (1,'Math'),(2,'Science'),(3,'History'),(4,'English');
 /*!40000 ALTER TABLE `subject` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +351,9 @@ CREATE TABLE `user` (
   `role` enum('ADMIN','TEACHER','STUDENT') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`idUser`)
+  PRIMARY KEY (`idUser`),
+  UNIQUE KEY `unique_username` (`username`),
+  UNIQUE KEY `unique_email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -371,4 +376,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-22 22:15:38
+-- Dump completed on 2024-05-23 23:00:19

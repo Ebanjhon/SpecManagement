@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -31,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Admin
+ * @author eban
  */
 @Entity
 @Table(name = "specification")
@@ -84,19 +83,17 @@ public class Specification implements Serializable {
     private Set<Coursestudy> coursestudySet;
     @JoinColumn(name = "hoiDongID", referencedColumnName = "idHoiDong")
     @ManyToOne
-    private Hoidong hoiDongID;
-    @JoinColumns({
-        @JoinColumn(name = "subjectID", referencedColumnName = "idSubject"),
-        @JoinColumn(name = "subjectID", referencedColumnName = "idSubject")})
+    private HoiDong hoiDongID;
+    @JoinColumn(name = "subjectID", referencedColumnName = "idSubject")
     @ManyToOne
-    private Subject subject;
+    private Subject subjectID;
     @JoinColumn(name = "typeSpecID", referencedColumnName = "idType")
     @ManyToOne
     private Typeofspecifi typeSpecID;
     @JoinColumn(name = "authorID", referencedColumnName = "idUser")
     @ManyToOne
     private User authorID;
-    @OneToMany(mappedBy = "specification")
+    @OneToMany(mappedBy = "specID")
     private Set<Comment> commentSet;
     @OneToMany(mappedBy = "specID")
     private Set<Oderdc> oderdcSet;
@@ -196,20 +193,20 @@ public class Specification implements Serializable {
         this.coursestudySet = coursestudySet;
     }
 
-    public Hoidong getHoiDongID() {
+    public HoiDong getHoiDongID() {
         return hoiDongID;
     }
 
-    public void setHoiDongID(Hoidong hoiDongID) {
+    public void setHoiDongID(HoiDong hoiDongID) {
         this.hoiDongID = hoiDongID;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public Subject getSubjectID() {
+        return subjectID;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSubjectID(Subject subjectID) {
+        this.subjectID = subjectID;
     }
 
     public Typeofspecifi getTypeSpecID() {

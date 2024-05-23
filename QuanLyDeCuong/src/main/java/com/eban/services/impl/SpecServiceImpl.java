@@ -8,6 +8,7 @@ import com.eban.pojo.Specification;
 import com.eban.repositories.SpecRepocitory;
 import com.eban.services.SpecService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,8 @@ public class SpecServiceImpl implements SpecService{
     private SpecRepocitory specRepo;
     
     @Override
-    public List<Specification> getListSpec() {
-        return this.specRepo.getListSpec();
+    public List<Specification> getListSpec(Map<String, String> params) {
+        return this.specRepo.getListSpec(params);
     }
     
 }
