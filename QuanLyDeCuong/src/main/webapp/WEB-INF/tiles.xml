@@ -13,17 +13,46 @@
                        value="/WEB-INF/layout/footer.jsp" />
     </definition>
     
+    <!--trang chu-->
     <definition name="index" extends="baseLayout">
         <put-attribute name="title" value="Trang chủ" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/index.jsp" />
     </definition>
-    
-     <definition name="subjects" extends="baseLayout">
+    <!--trang mon hoc-->
+    <definition name="subjects" extends="baseLayout">
         <put-attribute name="title" value="Mon hoc" />
         <put-attribute name="content"
                        value="/WEB-INF/pages/subjects.jsp" />
     </definition>
 
+    <!--trang khoa hoc-->
+    <definition name="courses" extends="baseLayout">
+        <put-attribute name="title" value="Khoa hoc" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/courses.jsp" />
+    </definition>
+    
+    <!--trang quan ly de cuong-->
+    <definition name="specifications" extends="baseLayout">
+        <put-attribute name="title" value="De cuong" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/specifications.jsp" />
+    </definition>
+    
+    <!--quan ly cot diem-->
+    <definition name="grandies" extends="baseLayout">
+        <put-attribute name="title" value="De cuong" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/grandies.jsp" />
+    </definition>
+    
+    <definition name="accounts" extends="baseLayout">
+        <put-attribute name="title" value="De cuong" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/accounts.jsp" />
+    </definition>
+    
+    
     
 </tiles-definitions>

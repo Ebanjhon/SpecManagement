@@ -21,12 +21,11 @@
                         Các dịch vụ
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark" style="width: 14%">
-                        <li><a class="dropdown-item" href="#">Các đề cương</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/specifications" />">Các đề cương</a></li>
                         <li><a class="dropdown-item" href="<c:url value="/subjects" />">Môn học</a></li>
-                        <li><a class="dropdown-item" href="#">Khóa học</a></li>
-                        <li><a class="dropdown-item" href="#">Cột điểm</a></li>
-                        <li><a class="dropdown-item" href="#"></a></li>
-                        <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/courses" />">Khóa học</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/grandies" />">Cột điểm</a></li>
+                        <li><a class="dropdown-item" href="<c:url value="/accounts" />">Quản lý tài khoản</a></li>
                     </ul>
                 </li>
                 <li><a href="#" class="nav-link px-2 text-white">About US</a></li>

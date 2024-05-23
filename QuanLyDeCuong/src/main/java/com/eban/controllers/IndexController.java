@@ -5,6 +5,7 @@
 package com.eban.controllers;
 
 import com.eban.pojo.Subject;
+import com.eban.services.CourseService;
 import com.eban.services.SubjectService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,18 @@ public class IndexController {
     public String index(Model model) {
         return "index";
     }
-    
+
     // goi cac service
     @Autowired
     private SubjectService subjectService;
 
+    @Autowired
+    private CourseService coursService;
+    
     // cac du lieu se duoc dung chung
     @ModelAttribute
     public void commonAttr(Model model) {
         model.addAttribute("subs", this.subjectService.getSubjects());
+        model.addAttribute("courses", this.coursService.getListCourse());
     }
 }
