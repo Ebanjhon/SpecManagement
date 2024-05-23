@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author eban
+ * @author Admin
  */
 @Entity
 @Table(name = "user")
@@ -108,10 +108,6 @@ public class User implements Serializable {
     @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chuTichID")
-    private Set<HoiDong> hoiDongSet;
-    @OneToMany(mappedBy = "thuKyID")
-    private Set<HoiDong> hoiDongSet1;
     @OneToMany(mappedBy = "userID")
     private Set<Chat> chatSet;
     @OneToMany(mappedBy = "teacherID")
@@ -122,6 +118,10 @@ public class User implements Serializable {
     private Set<Comment> commentSet;
     @OneToMany(mappedBy = "userID")
     private Set<Oderdc> oderdcSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chuTichID")
+    private Set<Hoidong> hoidongSet;
+    @OneToMany(mappedBy = "thuKyID")
+    private Set<Hoidong> hoidongSet1;
 
     public User() {
     }
@@ -247,24 +247,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Set<HoiDong> getHoiDongSet() {
-        return hoiDongSet;
-    }
-
-    public void setHoiDongSet(Set<HoiDong> hoiDongSet) {
-        this.hoiDongSet = hoiDongSet;
-    }
-
-    @XmlTransient
-    public Set<HoiDong> getHoiDongSet1() {
-        return hoiDongSet1;
-    }
-
-    public void setHoiDongSet1(Set<HoiDong> hoiDongSet1) {
-        this.hoiDongSet1 = hoiDongSet1;
-    }
-
-    @XmlTransient
     public Set<Chat> getChatSet() {
         return chatSet;
     }
@@ -307,6 +289,24 @@ public class User implements Serializable {
 
     public void setOderdcSet(Set<Oderdc> oderdcSet) {
         this.oderdcSet = oderdcSet;
+    }
+
+    @XmlTransient
+    public Set<Hoidong> getHoidongSet() {
+        return hoidongSet;
+    }
+
+    public void setHoidongSet(Set<Hoidong> hoidongSet) {
+        this.hoidongSet = hoidongSet;
+    }
+
+    @XmlTransient
+    public Set<Hoidong> getHoidongSet1() {
+        return hoidongSet1;
+    }
+
+    public void setHoidongSet1(Set<Hoidong> hoidongSet1) {
+        this.hoidongSet1 = hoidongSet1;
     }
 
     @Override

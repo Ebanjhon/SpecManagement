@@ -23,15 +23,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author eban
+ * @author Admin
  */
 @Entity
-@Table(name = "HoiDong")
+@Table(name = "hoidong")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "HoiDong.findAll", query = "SELECT h FROM HoiDong h"),
-    @NamedQuery(name = "HoiDong.findByIdHoiDong", query = "SELECT h FROM HoiDong h WHERE h.idHoiDong = :idHoiDong")})
-public class HoiDong implements Serializable {
+    @NamedQuery(name = "Hoidong.findAll", query = "SELECT h FROM Hoidong h"),
+    @NamedQuery(name = "Hoidong.findByIdHoiDong", query = "SELECT h FROM Hoidong h WHERE h.idHoiDong = :idHoiDong")})
+public class Hoidong implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,19 +39,19 @@ public class HoiDong implements Serializable {
     @Basic(optional = false)
     @Column(name = "idHoiDong")
     private Integer idHoiDong;
+    @OneToMany(mappedBy = "hoiDongID")
+    private Set<Specification> specificationSet;
     @JoinColumn(name = "chuTichID", referencedColumnName = "idUser")
     @ManyToOne(optional = false)
     private User chuTichID;
     @JoinColumn(name = "thuKyID", referencedColumnName = "idUser")
     @ManyToOne
     private User thuKyID;
-    @OneToMany(mappedBy = "hoiDongID")
-    private Set<Specification> specificationSet;
 
-    public HoiDong() {
+    public Hoidong() {
     }
 
-    public HoiDong(Integer idHoiDong) {
+    public Hoidong(Integer idHoiDong) {
         this.idHoiDong = idHoiDong;
     }
 
@@ -61,6 +61,15 @@ public class HoiDong implements Serializable {
 
     public void setIdHoiDong(Integer idHoiDong) {
         this.idHoiDong = idHoiDong;
+    }
+
+    @XmlTransient
+    public Set<Specification> getSpecificationSet() {
+        return specificationSet;
+    }
+
+    public void setSpecificationSet(Set<Specification> specificationSet) {
+        this.specificationSet = specificationSet;
     }
 
     public User getChuTichID() {
@@ -79,15 +88,6 @@ public class HoiDong implements Serializable {
         this.thuKyID = thuKyID;
     }
 
-    @XmlTransient
-    public Set<Specification> getSpecificationSet() {
-        return specificationSet;
-    }
-
-    public void setSpecificationSet(Set<Specification> specificationSet) {
-        this.specificationSet = specificationSet;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -98,10 +98,10 @@ public class HoiDong implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof HoiDong)) {
+        if (!(object instanceof Hoidong)) {
             return false;
         }
-        HoiDong other = (HoiDong) object;
+        Hoidong other = (Hoidong) object;
         if ((this.idHoiDong == null && other.idHoiDong != null) || (this.idHoiDong != null && !this.idHoiDong.equals(other.idHoiDong))) {
             return false;
         }
@@ -110,7 +110,7 @@ public class HoiDong implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eban.pojo.HoiDong[ idHoiDong=" + idHoiDong + " ]";
+        return "com.eban.pojo.Hoidong[ idHoiDong=" + idHoiDong + " ]";
     }
     
 }

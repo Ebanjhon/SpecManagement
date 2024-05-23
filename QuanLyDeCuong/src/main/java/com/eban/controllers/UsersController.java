@@ -5,6 +5,7 @@
 package com.eban.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -15,8 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UsersController {
     
     @GetMapping("/accounts")
-    public String viewAccounts()
+    public String viewAccounts(Model model)
     {
+//        model.addAttribute(teachers, new user);
         return "accounts";
     }
 }

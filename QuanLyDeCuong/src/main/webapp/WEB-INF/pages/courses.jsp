@@ -18,13 +18,45 @@
 
         <div class="mb-3" >
             <form:hidden path="idCourse"/>
-            <label class="form-label">Name Course</label>
+            <label class="form-label">Tên khóa học</label>
             <form:input type="text" class="form-control" path="nameCourse" id="name" placeholder="Name course..."/>
             <form:errors path="nameCourse" element="div" cssClass="text-danger"/>
 
         </div>
-            
-            
+        <!--chọn đề cương cho khóa học-->
+        <label class="form-label">Chọn đề cương</label>
+        <div class="form">
+            <form:select class="form-select" id="specID"  path="specID">
+                <c:forEach items="${specs}" var="s">
+                    <c:choose>
+                        <c:when test="${s.idSpec==course.specID.idSpec}">
+                            <option value="${s.idSpec}" selected>${s.nameSpec}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${s.idSpec}">ID: ${s.idSpec} - Tên: ${s.nameSpec} - Giảng viên: ${s.authorID.firstname} ${s.authorID.lastname}</option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </form:select>
+        </div>
+
+        <!--chọn giảng viên cho khóa học-->
+        <label class="form-label">Chọn giảng viên</label>
+        <div class="form">
+            <form:select class="form-select" id="teacherID"  path="teacherID">
+                <c:forEach items="${teachers}" var="t">
+                    <c:choose>
+                        <c:when test="${t.idUser==course.teacherID.idUser}">
+                            <option value="${t.idUser}" selected>${t.firstname} ${t.lastname}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${t.idUser}">${t.firstname} ${t.lastname}</option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </form:select>
+        </div>
+        <!--thực hiện hành động-->
         <div style="display: flex; justify-content: flex-end;">
             <button type="submit" class="btn btn-primary">
                 <c:choose>
