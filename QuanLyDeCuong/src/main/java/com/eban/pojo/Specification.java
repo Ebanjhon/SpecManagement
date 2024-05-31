@@ -4,6 +4,7 @@
  */
 package com.eban.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -78,24 +79,32 @@ public class Specification implements Serializable {
     @Column(name = "status")
     private String status;
     @OneToMany(mappedBy = "specifiID")
+    @JsonIgnore
     private Set<Specgrande> specgrandeSet;
     @OneToMany(mappedBy = "specID")
+    @JsonIgnore
     private Set<Coursestudy> coursestudySet;
     @JoinColumn(name = "hoiDongID", referencedColumnName = "idHoiDong")
     @ManyToOne
+    @JsonIgnore
     private HoiDong hoiDongID;
     @JoinColumn(name = "subjectID", referencedColumnName = "idSubject")
     @ManyToOne
+    @JsonIgnore
     private Subject subjectID;
     @JoinColumn(name = "typeSpecID", referencedColumnName = "idType")
     @ManyToOne
+    @JsonIgnore
     private Typeofspecifi typeSpecID;
     @JoinColumn(name = "authorID", referencedColumnName = "idUser")
     @ManyToOne
+    @JsonIgnore
     private User authorID;
     @OneToMany(mappedBy = "specID")
+    @JsonIgnore
     private Set<Comment> commentSet;
     @OneToMany(mappedBy = "specID")
+    @JsonIgnore
     private Set<Oderdc> oderdcSet;
 
     public Specification() {

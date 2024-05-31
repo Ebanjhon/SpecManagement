@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <header class="p-3 text-bg-dark" style="position: fixed; width: 100%">
     <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="height: 40px">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                 <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
             </a>
@@ -32,9 +32,21 @@
                 <li><a href="#" class="nav-link px-2 text-white">About US</a></li>
             </ul>
 
-            <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Login</button>
-                <button type="button" class="btn btn-warning">Sign-up</button>
+            <div class="text-end" style="width: 300px;
+                 display: flex;
+                 justify-content: space-between;
+                 text-align: center;
+                 height: 40px;
+                 ">
+                <c:choose>
+                    <c:when test="${pageContext.request.userPrincipal.name == null}">
+                        <a class=" btn btn-info " href="<c:url value="/login" />">Đăng nhập</a>
+                    </c:when>
+                    <c:when test="${pageContext.request.userPrincipal.name != null}">
+                        <h4 style="line-height: 40px">Hello ${pageContext.request.userPrincipal.name}!</h4>
+                        <a class=" btn btn-outline-info " href="<c:url value="/logout" />">Đăng xuất</a>
+                    </c:when>
+                </c:choose>
             </div>
         </div>
     </div>

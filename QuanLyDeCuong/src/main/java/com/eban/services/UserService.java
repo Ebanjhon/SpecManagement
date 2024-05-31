@@ -6,11 +6,15 @@ package com.eban.services;
 
 import com.eban.pojo.User;
 import java.util.List;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  *
  * @author Admin
  */
-public interface UserService {
+public interface UserService extends UserDetailsService{
+
     List<User> getListTeacher();
+    User getUserByUserName(String username);
+
 }

@@ -4,6 +4,7 @@
  */
 package com.eban.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -109,18 +110,25 @@ public class User implements Serializable {
     @Column(name = "avatar")
     private String avatar;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "chuTichID")
+    @JsonIgnore
     private Set<HoiDong> hoiDongSet;
     @OneToMany(mappedBy = "thuKyID")
+    @JsonIgnore
     private Set<HoiDong> hoiDongSet1;
     @OneToMany(mappedBy = "userID")
+    @JsonIgnore
     private Set<Chat> chatSet;
     @OneToMany(mappedBy = "teacherID")
+    @JsonIgnore
     private Set<Coursestudy> coursestudySet;
     @OneToMany(mappedBy = "authorID")
+    @JsonIgnore
     private Set<Specification> specificationSet;
     @OneToMany(mappedBy = "userID")
+    @JsonIgnore
     private Set<Comment> commentSet;
     @OneToMany(mappedBy = "userID")
+    @JsonIgnore
     private Set<Oderdc> oderdcSet;
 
     public User() {

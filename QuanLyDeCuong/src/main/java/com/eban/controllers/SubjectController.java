@@ -13,6 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,12 +52,14 @@ public class SubjectController {
 
     // controller lay doi tuong rong va tao doi tuong or cap nhat check id
     @PostMapping("/subjects")
-    public String createSubject(@ModelAttribute(value = "sub") @Valid Subject s) {
-        try {
-            this.subjectService.addOrUpdateSubject(s);
-            return "redirect:/subjects";
-        } catch (Exception e) {
+    public String createSubject(@ModelAttribute(value = "sub") @Valid Subject s, BindingResult rs) {
+        if (!rs.hasErrors()) {
+            try {
+                this.subjectService.addOrUpdateSubject(s);
+                return "redirect:/subjects";
+            } catch (Exception e) {
 
+            }
         }
         return "subjects";
     }
