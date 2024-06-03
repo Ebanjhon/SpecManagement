@@ -40,4 +40,11 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         return query.getResultList();
     }
 
+    @Override
+    public Specification getSpecById(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        return  session.get(Specification.class, id);
+
+    }
+
 }

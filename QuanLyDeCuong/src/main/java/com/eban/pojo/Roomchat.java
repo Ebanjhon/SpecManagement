@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author eban
+ * @author nmau4
  */
 @Entity
 @Table(name = "roomchat")

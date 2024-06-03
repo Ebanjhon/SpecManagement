@@ -16,6 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.hibernate.mapping.Map;
+
 
 /**
  *
@@ -26,6 +33,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Override
     public List<User> getListTeacher() {
@@ -49,6 +58,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserName(String username) {
         return this.userRepo.getUserByUserName(username);
+    }
+
+    @Override
+    public void addUser(User user) {
+        if (!user.getFile().isEmpty()) {
+            try {
+                java.util.Map res = this.cloudinary.uploader().upload(user.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                
+                user.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        this.userRepo.addUser(user);
     }
 
 }

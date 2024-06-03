@@ -21,14 +21,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author eban
+ * @author nmau4
  */
 @Entity
 @Table(name = "user")
@@ -80,13 +82,11 @@ public class User implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 4)
     @Column(name = "gender")
     private String gender;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "email")
     private String email;
@@ -98,7 +98,6 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 7)
     @Column(name = "role")
     private String role;
@@ -109,12 +108,6 @@ public class User implements Serializable {
     @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chuTichID")
-    @JsonIgnore
-    private Set<HoiDong> hoiDongSet;
-    @OneToMany(mappedBy = "thuKyID")
-    @JsonIgnore
-    private Set<HoiDong> hoiDongSet1;
     @OneToMany(mappedBy = "userID")
     @JsonIgnore
     private Set<Chat> chatSet;
@@ -130,6 +123,16 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "userID")
     @JsonIgnore
     private Set<Oderdc> oderdcSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chuTichID")
+    @JsonIgnore
+    private Set<Hoidong> hoidongSet;
+    @OneToMany(mappedBy = "thuKyID")
+    @JsonIgnore
+    private Set<Hoidong> hoidongSet1;
+    
+    
+    @Transient
+    private MultipartFile file;
 
     public User() {
     }
@@ -255,24 +258,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Set<HoiDong> getHoiDongSet() {
-        return hoiDongSet;
-    }
-
-    public void setHoiDongSet(Set<HoiDong> hoiDongSet) {
-        this.hoiDongSet = hoiDongSet;
-    }
-
-    @XmlTransient
-    public Set<HoiDong> getHoiDongSet1() {
-        return hoiDongSet1;
-    }
-
-    public void setHoiDongSet1(Set<HoiDong> hoiDongSet1) {
-        this.hoiDongSet1 = hoiDongSet1;
-    }
-
-    @XmlTransient
     public Set<Chat> getChatSet() {
         return chatSet;
     }
@@ -317,6 +302,24 @@ public class User implements Serializable {
         this.oderdcSet = oderdcSet;
     }
 
+    @XmlTransient
+    public Set<Hoidong> getHoidongSet() {
+        return hoidongSet;
+    }
+
+    public void setHoidongSet(Set<Hoidong> hoidongSet) {
+        this.hoidongSet = hoidongSet;
+    }
+
+    @XmlTransient
+    public Set<Hoidong> getHoidongSet1() {
+        return hoidongSet1;
+    }
+
+    public void setHoidongSet1(Set<Hoidong> hoidongSet1) {
+        this.hoidongSet1 = hoidongSet1;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -340,6 +343,20 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.eban.pojo.User[ idUser=" + idUser + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

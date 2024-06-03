@@ -26,5 +26,11 @@ public class SpecServiceImpl implements SpecService{
     public List<Specification> getListSpec(Map<String, String> params) {
         return this.specRepo.getListSpec(params);
     }
+
+    @Override
+    public Specification getSpecById(int i) {
+        return this.specRepo.getSpecById(i);
+    }
+    
     
 }

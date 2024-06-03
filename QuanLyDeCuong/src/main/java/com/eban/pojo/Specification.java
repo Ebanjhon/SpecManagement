@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author eban
+ * @author nmau4
  */
 @Entity
 @Table(name = "specification")
@@ -87,18 +87,15 @@ public class Specification implements Serializable {
     @JoinColumn(name = "hoiDongID", referencedColumnName = "idHoiDong")
     @ManyToOne
     @JsonIgnore
-    private HoiDong hoiDongID;
+    private Hoidong hoiDongID;
     @JoinColumn(name = "subjectID", referencedColumnName = "idSubject")
     @ManyToOne
-    @JsonIgnore
     private Subject subjectID;
     @JoinColumn(name = "typeSpecID", referencedColumnName = "idType")
     @ManyToOne
-    @JsonIgnore
     private Typeofspecifi typeSpecID;
     @JoinColumn(name = "authorID", referencedColumnName = "idUser")
     @ManyToOne
-    @JsonIgnore
     private User authorID;
     @OneToMany(mappedBy = "specID")
     @JsonIgnore
@@ -202,11 +199,11 @@ public class Specification implements Serializable {
         this.coursestudySet = coursestudySet;
     }
 
-    public HoiDong getHoiDongID() {
+    public Hoidong getHoiDongID() {
         return hoiDongID;
     }
 
-    public void setHoiDongID(HoiDong hoiDongID) {
+    public void setHoiDongID(Hoidong hoiDongID) {
         this.hoiDongID = hoiDongID;
     }
 
@@ -276,5 +273,5 @@ public class Specification implements Serializable {
     public String toString() {
         return "com.eban.pojo.Specification[ idSpec=" + idSpec + " ]";
     }
-    
+
 }

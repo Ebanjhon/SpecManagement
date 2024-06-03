@@ -34,12 +34,12 @@ public class UserRepositoryImpl implements UserRepository {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<User> root = query.from(User.class);
-        
+
         // Add the condition to the query
         query.select(root).where(builder.equal(root.get("role"), "Teacher"));
-        
+
         Query q = session.createQuery(query);
-        
+
         List<User> teachers = q.getResultList();
         return teachers;
     }
@@ -59,13 +59,21 @@ public class UserRepositoryImpl implements UserRepository {
 //        
 //        return user;
 //    }
-    
     @Override
     public User getUserByUserName(String username) {
         Session session = this.factory.getObject().getCurrentSession();
         Query q = session.createQuery("FROM User WHERE username = :username");
         q.setParameter("username", username);
         return (User) q.getSingleResult();
+    }
+
+    @Override
+    public void addUser(User user) {
+        Session session = this.factory.getObject().getCurrentSession();
+        session.save(user);
+        
+        
+
     }
 
 }

@@ -14,4 +14,6 @@ import java.util.List;
 public interface UserRepository {
     List<User> getListTeacher();
     User getUserByUserName(String username);
+
+    public void addUser(User user);
 }

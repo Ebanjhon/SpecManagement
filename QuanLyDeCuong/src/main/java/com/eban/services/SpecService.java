@@ -14,4 +14,5 @@ import java.util.Map;
  */
 public interface SpecService {
     List<Specification> getListSpec(Map<String, String> params);
+    Specification getSpecById(int id);
 }

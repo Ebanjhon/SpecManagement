@@ -4,6 +4,8 @@
  */
 package com.eban.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -43,8 +45,8 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         m.setBasename("messages");
         return m;
     }
-    
-     @Bean(name = "validator")
+
+    @Bean(name = "validator")
     public LocalValidatorFactoryBean validator() {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource());
@@ -55,5 +57,16 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public Validator getValidator() {
         return validator();
     }
+//
+//    @Bean
+//    public Cloudinary cloudinary() {
+//        Cloudinary cloudinary
+//                = new Cloudinary(ObjectUtils.asMap(
+//                        "cloud_name", "dfbykxwru",
+//                        "api_key", "735743547192593",
+//                        "api_secret", "YZdfya-GPtKUZyqws6jn1Afku5g",
+//                        "secure", true));
+//        return cloudinary;
+//    }
 
 }
