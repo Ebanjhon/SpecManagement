@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,42 +30,30 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api")
 public class ApiUserController {
-
     @Autowired
-    private BCryptPasswordEncoder passwordEncorder;
+    private BCryptPasswordEncoder passswordEncoder;
     @Autowired
     private UserService userService;
 
     @PostMapping(path = "/users/", consumes = {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE
-
     })
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
         User u = new User();
-        u.setFirstname(params.get("firstname"));
-        u.setLastname(params.get("lastname"));
-
+        u.setFirstname(params.get("firstName"));
+        u.setLastname(params.get("lastName"));
         u.setUsername(params.get("username"));
-        
-        
         String password = params.get("password");
-        u.setPassword(this.passwordEncorder.encode(password));
-        
-        
-        u.setRole("role");
+        u.setPassword(this.passswordEncoder.encode(password));
+        u.setRole(params.get("role"));
+        u.setEmail(params.get("email"));
+        u.setGender(params.get("gender"));
         u.setActive(true);
-        
-        
-        if(file.length > 0)
+        if (file.length > 0)
             u.setFile(file[0]);
-        
-        
+
         this.userService.addUser(u);
-        
-        
-
     }
-
 }

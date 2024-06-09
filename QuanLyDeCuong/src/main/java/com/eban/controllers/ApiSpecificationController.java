@@ -35,10 +35,11 @@ public class ApiSpecificationController {
     }
     
     
-     @GetMapping(path = "/specifications/{idSpec}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/specifications/{idSpec}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Specification> retrieve(@PathVariable(value = "idSpec") int id) {
         return new ResponseEntity<>(this.specService.getSpecById(id), HttpStatus.OK); 
     }
+    
     
     
 }

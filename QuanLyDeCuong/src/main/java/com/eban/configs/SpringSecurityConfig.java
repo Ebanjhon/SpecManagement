@@ -4,6 +4,8 @@
  */
 package com.eban.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -63,4 +65,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
         http.csrf().disable();
     }
+    
+    
+    
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary
+                = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dfbykxwru",
+                        "api_key", "735743547192593",
+                        "api_secret", "YZdfya-GPtKUZyqws6jn1Afku5g",
+                        "secure", true));
+        return cloudinary;
+    }
+
+    
+    
 }

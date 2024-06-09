@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.validation.Validator;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
  *
@@ -53,20 +54,17 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         return bean;
     }
 
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver
+                = new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("UTF-8");
+        return resolver;
+    }
+
     @Override
     public Validator getValidator() {
         return validator();
     }
-//
-//    @Bean
-//    public Cloudinary cloudinary() {
-//        Cloudinary cloudinary
-//                = new Cloudinary(ObjectUtils.asMap(
-//                        "cloud_name", "dfbykxwru",
-//                        "api_key", "735743547192593",
-//                        "api_secret", "YZdfya-GPtKUZyqws6jn1Afku5g",
-//                        "secure", true));
-//        return cloudinary;
-//    }
 
 }

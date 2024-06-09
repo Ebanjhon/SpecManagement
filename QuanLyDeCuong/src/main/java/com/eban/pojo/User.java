@@ -64,12 +64,10 @@ public class User implements Serializable {
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "firstname")
     private String firstname;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "lastname")
     private String lastname;
@@ -102,7 +100,6 @@ public class User implements Serializable {
     @Column(name = "role")
     private String role;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "active")
     private boolean active;
     @Size(max = 255)
@@ -129,8 +126,6 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "thuKyID")
     @JsonIgnore
     private Set<Hoidong> hoidongSet1;
-    
-    
     @Transient
     private MultipartFile file;
 
