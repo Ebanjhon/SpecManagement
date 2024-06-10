@@ -24,10 +24,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -103,6 +105,9 @@ public class Specification implements Serializable {
     @OneToMany(mappedBy = "specID")
     @JsonIgnore
     private Set<Oderdc> oderdcSet;
+
+    @Transient
+    private MultipartFile file;
 
     public Specification() {
     }
@@ -252,7 +257,7 @@ public class Specification implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idSpec != null ? idSpec.hashCode() : 0);
+        hash += (getIdSpec() != null ? getIdSpec().hashCode() : 0);
         return hash;
     }
 
@@ -263,7 +268,7 @@ public class Specification implements Serializable {
             return false;
         }
         Specification other = (Specification) object;
-        if ((this.idSpec == null && other.idSpec != null) || (this.idSpec != null && !this.idSpec.equals(other.idSpec))) {
+        if ((this.getIdSpec() == null && other.getIdSpec() != null) || (this.getIdSpec() != null && !this.idSpec.equals(other.idSpec))) {
             return false;
         }
         return true;
@@ -271,7 +276,21 @@ public class Specification implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eban.pojo.Specification[ idSpec=" + idSpec + " ]";
+        return "com.eban.pojo.Specification[ idSpec=" + getIdSpec() + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
 }

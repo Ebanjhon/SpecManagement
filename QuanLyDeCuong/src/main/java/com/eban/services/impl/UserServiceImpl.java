@@ -69,9 +69,10 @@ public class UserServiceImpl implements UserService {
             } catch (IOException ex) {
                 Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+             this.userRepo.addUser(user);
         }
         
-        this.userRepo.addUser(user);
+       
         
     }
 }

@@ -15,4 +15,8 @@ import java.util.Map;
 public interface SpecRepocitory {
     List<Specification> getListSpec(Map<String, String> params);
     Specification getSpecById(int id);
+    boolean addSpec(Specification spec);
+    boolean updateSpec(Specification spec);
+    boolean deleteSpec(int id);
+    List<Specification> getSpecsBySubjectId(int subjectId);
 }
