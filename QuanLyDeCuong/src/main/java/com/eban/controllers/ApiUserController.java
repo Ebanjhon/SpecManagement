@@ -4,16 +4,18 @@
  */
 package com.eban.controllers;
 
+import com.eban.components.JwtService;
 import com.eban.pojo.User;
 import com.eban.services.UserService;
-import java.util.HashSet;
+import java.security.Principal;
 import java.util.Map;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,8 @@ public class ApiUserController {
     private BCryptPasswordEncoder passswordEncoder;
     @Autowired
     private UserService userService;
+    @Autowired
+    private JwtService jwtService;
 
     @PostMapping(path = "/users/", consumes = {
         MediaType.APPLICATION_JSON_VALUE,
@@ -56,4 +60,31 @@ public class ApiUserController {
 
         this.userService.addUser(u);
     }
+    
+    
+    
+    @PostMapping("/login/")
+    @CrossOrigin
+    public ResponseEntity<String> login(@RequestBody User user) {
+        if (this.userService.authUser(user.getUsername(), user.getPassword()) == true) {
+            String token = this.jwtService.generateTokenLogin(user.getUsername());
+            
+            return new ResponseEntity<>(token, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+    }
+    
+    @GetMapping(path = "/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public ResponseEntity<User> getCurrentUser(Principal p) {
+        if (p == null || p.getName() == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        User u = this.userService.getUserByUserName(p.getName());
+        return new ResponseEntity<>(u, HttpStatus.OK);
+    }
+
+    
+    
 }

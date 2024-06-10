@@ -12,8 +12,12 @@ import java.util.List;
  * @author Admin
  */
 public interface UserRepository {
+
     List<User> getListTeacher();
+
     User getUserByUserName(String username);
 
     void addUser(User user);
+
+    boolean authUser(String username, String password);
 }

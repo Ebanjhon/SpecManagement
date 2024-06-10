@@ -4,8 +4,6 @@
  */
 package com.eban.configs;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,7 +29,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @ComponentScan(basePackages = {
     "com.eban.controllers",
     "com.eban.repositories",
-    "com.eban.services"
+    "com.eban.services",
+    "com.eban.components"
 })
 public class WebAppContextConfig implements WebMvcConfigurer {
 

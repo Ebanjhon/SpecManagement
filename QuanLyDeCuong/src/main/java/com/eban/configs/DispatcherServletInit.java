@@ -10,7 +10,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  *
  * @author eban
  */
-
 public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
@@ -18,20 +17,25 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
         return new Class[]{
             HibernateConfig.class,
             TilesConfigs.class,
-            SpringSecurityConfig.class
-        };
-        
+            SpringSecurityConfig.class,
+                JwtSecurityConfig.class
     }
+;
+
+}
 
     @Override
-    protected Class<?>[] getServletConfigClasses() {
+protected Class
+
+<?>[] getServletConfigClasses() {
         return new Class[]{
             WebAppContextConfig.class
-        };
+
+};
     }
 
     @Override
-    protected String[] getServletMappings() {
+protected String[] getServletMappings() {
         return new String[]{"/"};
     }
 

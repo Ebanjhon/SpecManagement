@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author Admin
@@ -60,7 +59,7 @@ public class UserServiceImpl implements UserService {
         return this.userRepo.getUserByUserName(username);
     }
 
- @Override
+    @Override
     public void addUser(User user) {
         if (!user.getFile().isEmpty()) {
             try {
@@ -69,10 +68,14 @@ public class UserServiceImpl implements UserService {
             } catch (IOException ex) {
                 Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-             this.userRepo.addUser(user);
+            this.userRepo.addUser(user);
         }
-        
-       
-        
+
     }
+
+    @Override
+    public boolean authUser(String username, String password) {
+        return this.userRepo.authUser(username, password);
+    }
+
 }
