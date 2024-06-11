@@ -49,7 +49,8 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone"),
     @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role"),
     @NamedQuery(name = "User.findByActive", query = "SELECT u FROM User u WHERE u.active = :active"),
-    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar")})
+    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar"),
+    @NamedQuery(name = "User.findByCoin", query = "SELECT u FROM User u WHERE u.coin = :coin")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -96,7 +97,7 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
     @Basic(optional = false)
-    @Size(min = 1, max = 7)
+    @Size(min = 1, max = 12)
     @Column(name = "role")
     private String role;
     @Basic(optional = false)
@@ -105,6 +106,8 @@ public class User implements Serializable {
     @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
+    @Column(name = "coin")
+    private Integer coin;
     @OneToMany(mappedBy = "userID")
     @JsonIgnore
     private Set<Chat> chatSet;
@@ -251,6 +254,15 @@ public class User implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+    
+    public Integer getCoin() {
+        return coin;
+    }
+
+    public void setCoin(Integer coin) {
+        this.coin = coin;
+    }
+
 
     @XmlTransient
     public Set<Chat> getChatSet() {
