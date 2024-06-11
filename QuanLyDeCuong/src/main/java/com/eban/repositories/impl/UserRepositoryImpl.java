@@ -28,8 +28,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
-    
-    
+
     @Autowired
     private BCryptPasswordEncoder passEncoder;
 
@@ -65,25 +64,26 @@ public class UserRepositoryImpl implements UserRepository {
 //        return user;
 //    }
     @Override
-    public User getUserByUserName(String username) {
-        Session session = this.factory.getObject().getCurrentSession();
-        Query q = session.createQuery("FROM User WHERE username = :username");
+    public User getUserByUsername(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User WHERE username = :username");
         q.setParameter("username", username);
+        
         return (User) q.getSingleResult();
     }
+
 
     @Override
     public void addUser(User user) {
         Session session = this.factory.getObject().getCurrentSession();
         session.save(user);
-        
-        
 
     }
+
     @Override
     public boolean authUser(String username, String password) {
-        User  u = this.getUserByUserName(username);
-        
+        User u = this.getUserByUsername(username);
+
         return this.passEncoder.matches(password, u.getPassword());
     }
 

@@ -15,7 +15,7 @@ public interface UserRepository {
 
     List<User> getListTeacher();
 
-    User getUserByUserName(String username);
+    User getUserByUsername(String username);
 
     void addUser(User user);
 

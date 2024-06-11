@@ -78,13 +78,8 @@ public class ApiUserController {
     @GetMapping(path = "/current-user/", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<User> getCurrentUser(Principal p) {
-        if (p == null || p.getName() == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        User u = this.userService.getUserByUserName(p.getName());
+        User u = this.userService.getUserByUsername(p.getName());
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
-    
-    
 }

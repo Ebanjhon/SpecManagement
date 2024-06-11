@@ -4,6 +4,7 @@
  */
 package com.eban.components;
 
+
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -15,8 +16,6 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,8 +28,6 @@ public class JwtService {
     public static final String SECRET_KEY = "11111111111111111111111111111111";
     public static final byte[] SHARED_SECRET_KEY = SECRET_KEY.getBytes();
     public static final int EXPIRE_TIME = 86400000;
-    
-    private static final Logger logger = Logger.getLogger(JwtService.class.getName());
 
     public String generateTokenLogin(String username) {
         String token = null;
@@ -39,6 +36,7 @@ public class JwtService {
             
             JWTClaimsSet.Builder builder = new JWTClaimsSet.Builder();
             builder.claim("username", username);
+            
             builder.expirationTime(new Date(System.currentTimeMillis() + EXPIRE_TIME));
             
             JWTClaimsSet claimsSet = builder.build();
@@ -47,7 +45,7 @@ public class JwtService {
             signedJWT.sign(signer);
             token = signedJWT.serialize();
         } catch (JOSEException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            System.out.println(e.getMessage());
         }
         return token;
     }
@@ -61,35 +59,31 @@ public class JwtService {
                 claims = signedJWT.getJWTClaimsSet();
             }
         } catch (JOSEException | ParseException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            System.err.println(e.getMessage());
         }
         return claims;
     }
     
     private Date getExpirationDateFromToken(String token) {
         JWTClaimsSet claims = getClaimsFromToken(token);
-        if (claims == null) {
-            return null;
-        }
-        return claims.getExpirationTime();
+        Date expiration = claims.getExpirationTime();
+        return expiration;
     }
 
     public String getUsernameFromToken(String token) {
-        JWTClaimsSet claims = getClaimsFromToken(token);
-        if (claims == null) {
-            return null;
-        }
+        String username = null;
         try {
-            return claims.getStringClaim("username");
+            JWTClaimsSet claims = getClaimsFromToken(token);
+            username = claims.getStringClaim("username");
         } catch (ParseException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
-            return null;
+            System.err.println(e.getMessage());
         }
+        return username;
     }
 
     private Boolean isTokenExpired(String token) {
         Date expiration = getExpirationDateFromToken(token);
-        return expiration != null && expiration.before(new Date());
+        return expiration.before(new Date());
     }
 
     public Boolean validateTokenLogin(String token) {
@@ -97,6 +91,7 @@ public class JwtService {
             return false;
         }
         String username = getUsernameFromToken(token);
+        
         return !(username == null || username.isEmpty() || isTokenExpired(token));
     }
 }

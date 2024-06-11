@@ -41,8 +41,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        return this.userRepo.getUserByUsername(username);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User u = this.userRepo.getUserByUserName(username);
+        User u = this.userRepo.getUserByUsername(username);
         if (u == null) {
             throw new UsernameNotFoundException("Không tồn tại!");
         }
@@ -52,11 +57,6 @@ public class UserServiceImpl implements UserService {
 
         return new org.springframework.security.core.userdetails.User(
                 u.getUsername(), u.getPassword(), authorities);
-    }
-
-    @Override
-    public User getUserByUserName(String username) {
-        return this.userRepo.getUserByUserName(username);
     }
 
     @Override
