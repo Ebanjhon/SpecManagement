@@ -33,7 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author nmau4
+ * @author eban
  */
 @Entity
 @Table(name = "specification")
@@ -44,7 +44,6 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Specification.findByNameSpec", query = "SELECT s FROM Specification s WHERE s.nameSpec = :nameSpec"),
     @NamedQuery(name = "Specification.findByCredit", query = "SELECT s FROM Specification s WHERE s.credit = :credit"),
     @NamedQuery(name = "Specification.findByDateCreate", query = "SELECT s FROM Specification s WHERE s.dateCreate = :dateCreate"),
-    @NamedQuery(name = "Specification.findByPrice", query = "SELECT s FROM Specification s WHERE s.price = :price"),
     @NamedQuery(name = "Specification.findByFileSpec", query = "SELECT s FROM Specification s WHERE s.fileSpec = :fileSpec"),
     @NamedQuery(name = "Specification.findByStatus", query = "SELECT s FROM Specification s WHERE s.status = :status")})
 public class Specification implements Serializable {
@@ -69,9 +68,6 @@ public class Specification implements Serializable {
     @Column(name = "dateCreate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "price")
-    private BigDecimal price;
     @Size(max = 255)
     @Column(name = "fileSpec")
     private String fileSpec;
@@ -81,14 +77,11 @@ public class Specification implements Serializable {
     @Column(name = "status")
     private String status;
     @OneToMany(mappedBy = "specifiID")
-    @JsonIgnore
     private Set<Specgrande> specgrandeSet;
     @OneToMany(mappedBy = "specID")
-    @JsonIgnore
     private Set<Coursestudy> coursestudySet;
     @JoinColumn(name = "hoiDongID", referencedColumnName = "idHoiDong")
     @ManyToOne
-    @JsonIgnore
     private Hoidong hoiDongID;
     @JoinColumn(name = "subjectID", referencedColumnName = "idSubject")
     @ManyToOne
@@ -100,12 +93,10 @@ public class Specification implements Serializable {
     @ManyToOne
     private User authorID;
     @OneToMany(mappedBy = "specID")
-    @JsonIgnore
     private Set<Comment> commentSet;
     @OneToMany(mappedBy = "specID")
-    @JsonIgnore
     private Set<Oderdc> oderdcSet;
-
+    
     @Transient
     private MultipartFile file;
 
@@ -160,14 +151,6 @@ public class Specification implements Serializable {
 
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public String getFileSpec() {
@@ -257,7 +240,7 @@ public class Specification implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (getIdSpec() != null ? getIdSpec().hashCode() : 0);
+        hash += (idSpec != null ? idSpec.hashCode() : 0);
         return hash;
     }
 
@@ -268,7 +251,7 @@ public class Specification implements Serializable {
             return false;
         }
         Specification other = (Specification) object;
-        if ((this.getIdSpec() == null && other.getIdSpec() != null) || (this.getIdSpec() != null && !this.idSpec.equals(other.idSpec))) {
+        if ((this.idSpec == null && other.idSpec != null) || (this.idSpec != null && !this.idSpec.equals(other.idSpec))) {
             return false;
         }
         return true;
@@ -276,10 +259,10 @@ public class Specification implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eban.pojo.Specification[ idSpec=" + getIdSpec() + " ]";
+        return "com.eban.pojo.Specification[ idSpec=" + idSpec + " ]";
     }
 
-    /**
+     /**
      * @return the file
      */
     public MultipartFile getFile() {
@@ -292,5 +275,5 @@ public class Specification implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-
+    
 }

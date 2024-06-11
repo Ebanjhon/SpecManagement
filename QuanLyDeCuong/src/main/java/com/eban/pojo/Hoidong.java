@@ -4,7 +4,6 @@
  */
 package com.eban.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -24,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author nmau4
+ * @author eban
  */
 @Entity
 @Table(name = "hoidong")
@@ -41,7 +40,6 @@ public class Hoidong implements Serializable {
     @Column(name = "idHoiDong")
     private Integer idHoiDong;
     @OneToMany(mappedBy = "hoiDongID")
-    @JsonIgnore
     private Set<Specification> specificationSet;
     @JoinColumn(name = "chuTichID", referencedColumnName = "idUser")
     @ManyToOne(optional = false)
@@ -114,5 +112,5 @@ public class Hoidong implements Serializable {
     public String toString() {
         return "com.eban.pojo.Hoidong[ idHoiDong=" + idHoiDong + " ]";
     }
-
+    
 }

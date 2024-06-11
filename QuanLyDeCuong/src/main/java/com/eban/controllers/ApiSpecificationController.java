@@ -68,7 +68,6 @@ public class ApiSpecificationController {
         spec.setCredit(Integer.parseInt(params.get("credit")));
         spec.setContent(params.get("content"));
         spec.setDateCreate(new Date());
-        spec.setPrice(new BigDecimal(params.get("price")));
         spec.setStatus(params.get("status"));
 
         if (params.get("subjectId") != null) {

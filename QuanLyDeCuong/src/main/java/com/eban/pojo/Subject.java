@@ -4,7 +4,6 @@
  */
 package com.eban.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -24,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author nmau4
+ * @author eban
  */
 @Entity
 @Table(name = "subject")
@@ -47,7 +46,6 @@ public class Subject implements Serializable {
     @Column(name = "nameSubject")
     private String nameSubject;
     @OneToMany(mappedBy = "subjectID")
-    @JsonIgnore
     private Set<Specification> specificationSet;
 
     public Subject() {

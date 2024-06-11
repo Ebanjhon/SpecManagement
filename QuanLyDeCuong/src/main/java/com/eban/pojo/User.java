@@ -4,7 +4,6 @@
  */
 package com.eban.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -30,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author nmau4
+ * @author eban
  */
 @Entity
 @Table(name = "user")
@@ -49,7 +48,8 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone"),
     @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role"),
     @NamedQuery(name = "User.findByActive", query = "SELECT u FROM User u WHERE u.active = :active"),
-    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar")})
+    @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar"),
+    @NamedQuery(name = "User.findByCoin", query = "SELECT u FROM User u WHERE u.coin = :coin")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,10 +64,12 @@ public class User implements Serializable {
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "firstname")
     private String firstname;
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "lastname")
     private String lastname;
@@ -80,11 +82,13 @@ public class User implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 4)
     @Column(name = "gender")
     private String gender;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "email")
     private String email;
@@ -96,39 +100,37 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
     @Basic(optional = false)
-    @Size(min = 1, max = 7)
+    @NotNull
+    @Size(min = 1, max = 12)
     @Column(name = "role")
     private String role;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "active")
     private boolean active;
     @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
+    @Column(name = "coin")
+    private Integer coin;
     @OneToMany(mappedBy = "userID")
-    @JsonIgnore
     private Set<Chat> chatSet;
     @OneToMany(mappedBy = "teacherID")
-    @JsonIgnore
     private Set<Coursestudy> coursestudySet;
     @OneToMany(mappedBy = "authorID")
-    @JsonIgnore
     private Set<Specification> specificationSet;
     @OneToMany(mappedBy = "userID")
-    @JsonIgnore
     private Set<Comment> commentSet;
     @OneToMany(mappedBy = "userID")
-    @JsonIgnore
     private Set<Oderdc> oderdcSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "chuTichID")
-    @JsonIgnore
     private Set<Hoidong> hoidongSet;
     @OneToMany(mappedBy = "thuKyID")
-    @JsonIgnore
     private Set<Hoidong> hoidongSet1;
+
     @Transient
     private MultipartFile file;
-
+    
     public User() {
     }
 
@@ -252,6 +254,14 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
+    public Integer getCoin() {
+        return coin;
+    }
+
+    public void setCoin(Integer coin) {
+        this.coin = coin;
+    }
+
     @XmlTransient
     public Set<Chat> getChatSet() {
         return chatSet;
@@ -339,7 +349,7 @@ public class User implements Serializable {
     public String toString() {
         return "com.eban.pojo.User[ idUser=" + idUser + " ]";
     }
-
+    
     /**
      * @return the file
      */
