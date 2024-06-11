@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: decuong
+-- Host: localhost    Database: decuong
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.2.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -254,7 +254,6 @@ CREATE TABLE `specification` (
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `subjectID` int DEFAULT NULL,
   `dateCreate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `price` decimal(10,2) DEFAULT NULL,
   `typeSpecID` int DEFAULT NULL,
   `fileSpec` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `hoiDongID` int DEFAULT NULL,
@@ -278,7 +277,7 @@ CREATE TABLE `specification` (
 
 LOCK TABLES `specification` WRITE;
 /*!40000 ALTER TABLE `specification` DISABLE KEYS */;
-INSERT INTO `specification` VALUES (2,'Đê cương môn toán',2,4,'abc',2,'2024-05-22 17:00:00',1.00,1,'',1,'none'),(3,'ádasdasd',2,3,'sdfsdf',3,'2024-05-22 17:00:00',1.00,2,'',1,'none'),(8,'Đề cương W3',1,3,'Crypto to the ',1,'2024-06-10 10:43:40',100.00,1,'https://res.cloudinary.com/dfbykxwru/image/upload/v1718016223/jk7db0siqpkv3zventrp.pdf',1,'editing'),(10,'Đề cương W3ssss',1,3,'Crypto to the ',1,'2024-06-10 10:46:18',100.00,1,'https://res.cloudinary.com/dfbykxwru/raw/upload/v1718016381/wr87ve0pxmac1mum0v90',1,'editing');
+INSERT INTO `specification` VALUES (2,'Đê cương môn toán',2,4,'abc',2,'2024-05-22 17:00:00',1,'',1,'none'),(3,'ádasdasd',2,3,'sdfsdf',3,'2024-05-22 17:00:00',2,'',1,'none'),(8,'Đề cương W3',1,3,'Crypto to the ',1,'2024-06-10 10:43:40',1,'https://res.cloudinary.com/dfbykxwru/image/upload/v1718016223/jk7db0siqpkv3zventrp.pdf',1,'editing'),(10,'Đề cương W3ssss',1,3,'Crypto to the ',1,'2024-06-10 10:46:18',1,'https://res.cloudinary.com/dfbykxwru/raw/upload/v1718016381/wr87ve0pxmac1mum0v90',1,'editing');
 /*!40000 ALTER TABLE `specification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,6 +350,7 @@ CREATE TABLE `user` (
   `role` enum('ROLE_ADMIN','ROLE_TEACHER','ROLE_STUDENT') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `coin` int DEFAULT '0',
   PRIMARY KEY (`idUser`),
   UNIQUE KEY `unique_username` (`username`),
   UNIQUE KEY `unique_email` (`email`)
@@ -363,7 +363,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'john_doe','John','Doe','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','2024-05-20','Nam','john@example.com','123 Main St, City','1234567890','ROLE_ADMIN',1,'avatar1.jpg'),(2,'jane_smith','Jane','Smith','p@ssw0rd','2024-05-20','Nữ','jane@example.com','456 Elm St, Town','0987654321','ROLE_TEACHER',1,'avatar2.jpg'),(3,'alice_wonder','Alice','Wonder','pass123','2024-05-20','Nữ','alice@example.com','789 Oak St, Village',NULL,'ROLE_STUDENT',1,'avatar3.jpg'),(4,'testapicreateuser','VanMau','Dk','$2a$10$oUPRXj9thCTiKUpAkbjaq.AWFIEg2QYYuTbCe1BCnr42Kgn5Z8c1m',NULL,'Nam','zfsfsd13@gmail.com',NULL,NULL,'ROLE_ADMIN',1,'https://res.cloudinary.com/dfbykxwru/image/upload/v1717958522/jnznbkqe0imlqkjztgxi.jpg'),(8,'testapicreateuserSS','VanMau','Dk','$2a$10$3./NNObUGPs6LLYKvncKduWoB6LgpL1a2P3R3VANnuKzZjB/lAFdG',NULL,'Nam','zfsfsd1S3@gmail.com',NULL,NULL,'ROLE_STUDENT',1,'https://res.cloudinary.com/dfbykxwru/image/upload/v1718015342/vkbbu5jlaodv3c3roigg.jpg');
+INSERT INTO `user` VALUES (1,'john_doe','John','Doe','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','2024-05-20','Nam','john@example.com','123 Main St, City','1234567890','ROLE_ADMIN',1,'avatar1.jpg',0),(2,'jane_smith','Jane','Smith','p@ssw0rd','2024-05-20','Nữ','jane@example.com','456 Elm St, Town','0987654321','ROLE_TEACHER',1,'avatar2.jpg',0),(3,'trinh','Alice','Wonder','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','2024-05-20','Nữ','alice@example.com','789 Oak St, Village',NULL,'ROLE_STUDENT',1,'avatar3.jpg',0),(4,'testapicreateuser','VanMau','Dk','$2a$10$oUPRXj9thCTiKUpAkbjaq.AWFIEg2QYYuTbCe1BCnr42Kgn5Z8c1m',NULL,'Nam','zfsfsd13@gmail.com',NULL,NULL,'ROLE_ADMIN',1,'https://res.cloudinary.com/dfbykxwru/image/upload/v1717958522/jnznbkqe0imlqkjztgxi.jpg',0),(8,'testapicreateuserSS','VanMau','Dk','$2a$10$3./NNObUGPs6LLYKvncKduWoB6LgpL1a2P3R3VANnuKzZjB/lAFdG',NULL,'Nam','zfsfsd1S3@gmail.com',NULL,NULL,'ROLE_STUDENT',1,'https://res.cloudinary.com/dfbykxwru/image/upload/v1718015342/vkbbu5jlaodv3c3roigg.jpg',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -376,4 +376,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-12  0:44:13
+-- Dump completed on 2024-06-11 20:02:40
