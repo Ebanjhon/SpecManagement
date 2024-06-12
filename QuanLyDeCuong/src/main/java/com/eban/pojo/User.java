@@ -130,6 +130,7 @@ public class User implements Serializable {
     @JsonIgnore
     private Set<Hoidong> hoidongSet1;
     @Transient
+    @JsonIgnore
     private MultipartFile file;
 
     public User() {

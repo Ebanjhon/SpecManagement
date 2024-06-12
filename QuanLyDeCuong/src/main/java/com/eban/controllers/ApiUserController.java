@@ -4,6 +4,7 @@
  */
 package com.eban.controllers;
 
+import com.eban.DTO.CurrentUserDTO;
 import com.eban.components.JwtService;
 import com.eban.pojo.User;
 import com.eban.services.UserService;
@@ -61,25 +62,37 @@ public class ApiUserController {
         this.userService.addUser(u);
     }
     
-    
-    
     @PostMapping("/login")
     @CrossOrigin
     public ResponseEntity<String> login(@RequestBody User user) {
         if (this.userService.authUser(user.getUsername(), user.getPassword()) == true) {
             String token = this.jwtService.generateTokenLogin(user.getUsername());
-            
             return new ResponseEntity<>(token, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Thông tin đăng nhập không chính xác!", HttpStatus.BAD_REQUEST);
     }
     
+    // lấy thông tin user hiện tại
     @GetMapping(path = "/current-user", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public ResponseEntity<User> getCurrentUser(Principal p) {
+    public ResponseEntity<CurrentUserDTO> getCurrentUser(Principal p) {
         User u = this.userService.getUserByUsername(p.getName());
-        return new ResponseEntity<>(u, HttpStatus.OK);
+        CurrentUserDTO user = new CurrentUserDTO(
+                u.getIdUser(),
+                u.getUsername(),
+                u.getFirstname(),
+                u.getLastname(),
+                u.getDateOfBirth(),
+                u.getGender(),
+                u.getEmail(),
+                u.getAddress(),
+                u.getPhone(),
+                u.getRole(),
+                u.getActive(),
+                u.getAvatar(),
+                u.getCoin()
+        );
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
 }
