@@ -118,7 +118,6 @@ public class ApiSpecificationController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 ///Tim theo môn học 
-
     @GetMapping("/specifications/subject/{subjectId}")
     public ResponseEntity<List<Specification>> getSpecsBySubjectId(@PathVariable(value = "subjectId") int subjectId) {
         List<Specification> specs = this.specService.getSpecsBySubjectId(subjectId);
@@ -127,4 +126,19 @@ public class ApiSpecificationController {
         }
         return new ResponseEntity<>(specs, HttpStatus.OK);
     }
+    
+    //API tìm kiếm theo từ khóa đc truyền từ param 
+    @GetMapping("/searchSpecifications")
+    public ResponseEntity<List<Specification>> searchSpecifications(
+            @RequestParam(required = false) String nameSpec,//cho required = fale tức là khi truyền không có thì nó là nul , để không bị lỗi 
+            @RequestParam(required = false) Integer credit,
+            @RequestParam(required = false) String teacherName,
+            @RequestParam(required = false) Integer subjectId) {
+        List<Specification> specs = this.specService.searchSpecifications(nameSpec, credit, teacherName, subjectId);
+        if (specs == null || specs.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(specs, HttpStatus.OK);
+    }
+    
 }

@@ -86,7 +86,7 @@ public class ApiCommentController {
 
     @PutMapping(path = "/comments/{commentId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Comment> updateComment(@PathVariable(value = "commentId") int commentId, @RequestBody Comment comment) {
-        comment.setIdComment(commentId);
+        comment.setIdComment(commentId);  
         boolean result = this.commentService.updateComment(comment);
         if (result) {
             return new ResponseEntity<>(comment, HttpStatus.OK);

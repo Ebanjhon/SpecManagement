@@ -13,13 +13,19 @@ import java.util.Map;
  * @author Admin
  */
 public interface SpecService {
+
     List<Specification> getListSpec(Map<String, String> params);
+
     Specification getSpecById(int id);
+
     void addSpec(Specification spec);
+
     boolean updateSpec(Specification spec);
+
     boolean deleteSpec(int id);
+
     List<Specification> getSpecsBySubjectId(int subjectId);
-    
-    
-    
+
+    List<Specification> searchSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId);
+
 }

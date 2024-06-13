@@ -19,4 +19,6 @@ public interface SpecRepocitory {
     boolean updateSpec(Specification spec);
     boolean deleteSpec(int id);
     List<Specification> getSpecsBySubjectId(int subjectId);
+
+    public List<Specification> searchSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId);
 }

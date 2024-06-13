@@ -9,6 +9,10 @@ import com.eban.repositories.SpecRepocitory;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -55,9 +59,8 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         return true;
     }
 
-
     @Override
-public boolean updateSpec(Specification s) {
+    public boolean updateSpec(Specification s) {
         Session session = this.factory.getObject().getCurrentSession();
         try {
             session.update(s);
@@ -69,13 +72,12 @@ public boolean updateSpec(Specification s) {
     }
 
     @Override
-public boolean deleteSpec(int i) {
+    public boolean deleteSpec(int i) {
         Session session = this.factory.getObject().getCurrentSession();
 
-try {
-            Specification spec = session.get(Specification.class  
-
-, i);
+        try {
+            Specification spec = session.get(Specification.class,
+                    i);
             if (spec != null) {
                 session.delete(spec);
                 return true;
@@ -88,11 +90,39 @@ try {
     }
 
     @Override
-public List<Specification> getSpecsBySubjectId(int i) {
+    public List<Specification> getSpecsBySubjectId(int i) {
         Session session = this.factory.getObject().getCurrentSession();
         Query query = session.createQuery("SELECT s FROM Specification s WHERE s.subjectID.idSubject = :subjectId");
         query.setParameter("subjectId", i);
         return query.getResultList();
     }
 
+    @Override
+    public List<Specification> searchSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();//Tạo Truy vấn SQL động
+        CriteriaQuery<Specification> query = builder.createQuery(Specification.class);//Xác định đối tượng truy vấn 
+        Root<Specification> root = query.from(Specification.class);// dai diẹn cho Spec
+
+        Predicate predicate = builder.conjunction();//Tạo cấu Truy vấn 
+
+        if (nameSpec != null && !nameSpec.isEmpty()) {
+            predicate = builder.and(predicate, builder.like(root.get("nameSpec").as(String.class), "%" + nameSpec + "%"));
+        }
+        if (credit != null) {
+            predicate = builder.and(predicate, builder.equal(root.get("credit"), credit));
+        }
+        if (teacherName != null && !teacherName.isEmpty()) {
+            predicate = builder.and(predicate, builder.like(root.get("authorID").get("username").as(String.class), "%" + teacherName + "%"));
+        }
+        if (subjectId != null) {
+            predicate = builder.and(predicate, builder.equal(root.get("subjectID").get("idSubject"), subjectId));
+        }
+
+        query.where(predicate);
+
+        return session.createQuery(query).getResultList();
+    }
+
 }
+ 

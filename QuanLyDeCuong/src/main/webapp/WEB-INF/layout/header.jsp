@@ -4,7 +4,7 @@
     Author     : eban
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <header class="p-3 text-bg-dark" style="position: fixed; width: 100%">
@@ -28,23 +28,18 @@
                         <li><a class="dropdown-item" href="<c:url value="/accounts" />">Quản lý tài khoản</a></li>
                     </ul>
                 </li>
-                <li><a href="#" class="nav-link px-2 text-white">Thong ke</a></li>
+                <li><a href="<c:url value="/stats" />" class="nav-link px-2 text-white">Thống kê</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">About US</a></li>
             </ul>
 
-            <div class="text-end" style="width: 300px;
-                 display: flex;
-                 justify-content: space-between;
-                 text-align: center;
-                 height: 40px;
-                 ">
+            <div class="text-end" style="width: 300px; display: flex; justify-content: space-between; text-align: center; height: 40px;">
                 <c:choose>
-                    <c:when test="${pageContext.request.userPrincipal.name == null}">
-                        <a class=" btn btn-info " href="<c:url value="/login" />">Đăng nhập</a>
+                    <c:when test="${pageContext.request.userPrincipal == null}">
+                        <a class="btn btn-info" href="<c:url value="/login" />">Đăng nhập</a>
                     </c:when>
-                    <c:when test="${pageContext.request.userPrincipal.name != null}">
+                    <c:when test="${pageContext.request.userPrincipal != null}">
                         <h4 style="line-height: 40px">Hello ${pageContext.request.userPrincipal.name}!</h4>
-                        <a class=" btn btn-outline-info " href="<c:url value="/logout" />">Đăng xuất</a>
+                        <a class="btn btn-outline-info" href="<c:url value="/logout" />">Đăng xuất</a>
                     </c:when>
                 </c:choose>
             </div>

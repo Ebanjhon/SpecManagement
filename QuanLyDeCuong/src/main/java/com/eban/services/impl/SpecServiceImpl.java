@@ -72,4 +72,9 @@ public class SpecServiceImpl implements SpecService {
         return this.specRepo.getSpecsBySubjectId(i);
     }
 
+    @Override
+    public List<Specification> searchSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId) {
+        return this.specRepo.searchSpecifications( nameSpec,  credit,  teacherName,  subjectId);
+    }
+
 }

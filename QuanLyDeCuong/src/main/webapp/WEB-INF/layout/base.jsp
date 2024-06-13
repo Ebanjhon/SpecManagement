@@ -4,8 +4,8 @@
     Author     : eban
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,13 +13,9 @@
         <title>
             <tiles:insertAttribute name="title"/>
         </title>
-
         <script src="https://kit.fontawesome.com/dd307a4d09.js" crossorigin="anonymous"></script>
-
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
     </head>
     <body>
         <tiles:insertAttribute name="header"/>
@@ -31,4 +27,5 @@
         <tiles:insertAttribute name="footer"/>
     </body>
 </html>
+
 
