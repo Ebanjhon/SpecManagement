@@ -30,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author nmau4
+ * @author eban
  */
 @Entity
 @Table(name = "user")
@@ -65,10 +65,12 @@ public class User implements Serializable {
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "firstname")
     private String firstname;
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "lastname")
     private String lastname;
@@ -81,11 +83,13 @@ public class User implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 4)
     @Column(name = "gender")
     private String gender;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "email")
     private String email;
@@ -101,6 +105,7 @@ public class User implements Serializable {
     @Column(name = "role")
     private String role;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "active")
     private boolean active;
     @Size(max = 255)
@@ -109,30 +114,24 @@ public class User implements Serializable {
     @Column(name = "coin")
     private Integer coin;
     @OneToMany(mappedBy = "userID")
-    @JsonIgnore
     private Set<Chat> chatSet;
     @OneToMany(mappedBy = "teacherID")
-    @JsonIgnore
     private Set<Coursestudy> coursestudySet;
     @OneToMany(mappedBy = "authorID")
-    @JsonIgnore
     private Set<Specification> specificationSet;
     @OneToMany(mappedBy = "userID")
-    @JsonIgnore
     private Set<Comment> commentSet;
     @OneToMany(mappedBy = "userID")
-    @JsonIgnore
     private Set<Oderdc> oderdcSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "chuTichID")
-    @JsonIgnore
     private Set<Hoidong> hoidongSet;
     @OneToMany(mappedBy = "thuKyID")
-    @JsonIgnore
     private Set<Hoidong> hoidongSet1;
+
     @Transient
     @JsonIgnore
     private MultipartFile file;
-
+    
     public User() {
     }
 
@@ -264,7 +263,6 @@ public class User implements Serializable {
         this.coin = coin;
     }
 
-
     @XmlTransient
     public Set<Chat> getChatSet() {
         return chatSet;
@@ -352,7 +350,7 @@ public class User implements Serializable {
     public String toString() {
         return "com.eban.pojo.User[ idUser=" + idUser + " ]";
     }
-
+    
     /**
      * @return the file
      */

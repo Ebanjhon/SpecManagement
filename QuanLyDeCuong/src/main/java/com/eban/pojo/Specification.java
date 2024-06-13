@@ -33,7 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
- * @author nmau4
+ * @author eban
  */
 @Entity
 @Table(name = "specification")
@@ -77,14 +77,11 @@ public class Specification implements Serializable {
     @Column(name = "status")
     private String status;
     @OneToMany(mappedBy = "specifiID")
-    @JsonIgnore
     private Set<Specgrande> specgrandeSet;
     @OneToMany(mappedBy = "specID")
-    @JsonIgnore
     private Set<Coursestudy> coursestudySet;
     @JoinColumn(name = "hoiDongID", referencedColumnName = "idHoiDong")
     @ManyToOne
-    @JsonIgnore
     private Hoidong hoiDongID;
     @JoinColumn(name = "subjectID", referencedColumnName = "idSubject")
     @ManyToOne
@@ -96,12 +93,10 @@ public class Specification implements Serializable {
     @ManyToOne
     private User authorID;
     @OneToMany(mappedBy = "specID")
-    @JsonIgnore
     private Set<Comment> commentSet;
     @OneToMany(mappedBy = "specID")
-    @JsonIgnore
     private Set<Oderdc> oderdcSet;
-
+    
     @Transient
     private MultipartFile file;
 
@@ -264,10 +259,10 @@ public class Specification implements Serializable {
 
     @Override
     public String toString() {
-        return "com.eban.pojo.Specification[ idSpec=" + idSpec  + " ]";
+        return "com.eban.pojo.Specification[ idSpec=" + idSpec + " ]";
     }
 
-    /**
+     /**
      * @return the file
      */
     public MultipartFile getFile() {
@@ -280,5 +275,5 @@ public class Specification implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-
+    
 }

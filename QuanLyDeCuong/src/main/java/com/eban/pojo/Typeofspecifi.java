@@ -4,7 +4,6 @@
  */
 package com.eban.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -24,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author nmau4
+ * @author eban
  */
 @Entity
 @Table(name = "typeofspecifi")
@@ -47,7 +46,6 @@ public class Typeofspecifi implements Serializable {
     @Column(name = "nameType")
     private String nameType;
     @OneToMany(mappedBy = "typeSpecID")
-    @JsonIgnore
     private Set<Specification> specificationSet;
 
     public Typeofspecifi() {
