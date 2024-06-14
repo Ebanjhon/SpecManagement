@@ -78,4 +78,12 @@ public class UserServiceImpl implements UserService {
         return this.userRepo.authUser(username, password);
     }
 
+    @Override
+    public void updateUser(User user) {
+        this.userRepo.updateUser(user);
+    }
+    
+    
+    
+
 }

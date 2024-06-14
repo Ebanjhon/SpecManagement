@@ -12,16 +12,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  *
  * @author Admin
  */
-public interface UserService extends UserDetailsService{
+public interface UserService extends UserDetailsService {
 
     List<User> getListTeacher();
+
     User getUserByUsername(String username);
+
     void addUser(User user);
+
     boolean authUser(String username, String password);
 
-    
-    
-    
-    
-    
+    void updateUser(User user);
+
 }

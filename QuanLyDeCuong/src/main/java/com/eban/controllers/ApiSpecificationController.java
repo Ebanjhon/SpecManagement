@@ -58,8 +58,8 @@ public class ApiSpecificationController {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE
     })
-    @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
+     @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
         Logger.getLogger(ApiSpecificationController.class.getName()).log(Level.INFO, "Params: {0}", params);
         Logger.getLogger(ApiSpecificationController.class.getName()).log(Level.INFO, "Files: {0}", file.length);
 
@@ -93,10 +93,15 @@ public class ApiSpecificationController {
         }
 
         if (file.length > 0) {
-            spec.setFile(file[0]);
+            String fileName = file[0].getOriginalFilename();
+            if (fileName != null && (fileName.endsWith(".doc") || fileName.endsWith(".docx") || fileName.endsWith(".pdf"))) {
+                spec.setFile(file[0]);
+            } else {
+                return new ResponseEntity<>("Invalid file format. Only .doc, .docx, and .pdf are allowed.", HttpStatus.BAD_REQUEST);
+            }
         }
         this.specService.addSpec(spec);
-
+        return new ResponseEntity<>("Specification created successfully", HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/specifications/{idSpec}", consumes = MediaType.APPLICATION_JSON_VALUE)

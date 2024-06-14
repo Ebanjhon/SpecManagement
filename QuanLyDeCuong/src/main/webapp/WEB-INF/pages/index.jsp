@@ -11,4 +11,9 @@
 <!DOCTYPE html>
 
 <h1>Welcom to my fucking website!🖕<h1>
+        <form action="api/payment" method="post">
+            <label for="amount">Số tiền:</label>
+            <input type="text" id="amount" name="amount" required>
+            <button type="submit">Nạp tiền</button>
+        </form>
 

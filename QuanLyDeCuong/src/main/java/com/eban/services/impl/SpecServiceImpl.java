@@ -41,21 +41,28 @@ public class SpecServiceImpl implements SpecService {
         return this.specRepo.getSpecById(i);
     }
 
-    @Override
+     @Override
     public void addSpec(Specification s) {
         if (!s.getFile().isEmpty()) {
             try {
-                Map res = this.cloudinary.uploader().upload(s.getFile().getBytes(), ObjectUtils.asMap("resource_type", "raw"));
-                s.setFileSpec(res.get("secure_url").toString());
+                String fileName = s.getFile().getOriginalFilename();
+                if (fileName != null && (fileName.endsWith(".doc") || fileName.endsWith(".docx") || fileName.endsWith(".pdf"))) {
+                    Map res = this.cloudinary.uploader().upload(s.getFile().getBytes(), ObjectUtils.asMap("resource_type", "raw", "public_id", fileName));
+                    String uploadedUrl = res.get("secure_url").toString();
+                    String fileUrl = uploadedUrl.replace(uploadedUrl.substring(uploadedUrl.lastIndexOf("/")), "/" + fileName);
+                    s.setFileSpec(fileUrl);
+                    this.specRepo.addSpec(s);
+                } else {
+                    throw new IOException("Invalid file format. Only .doc, .docx, and .pdf are allowed.");
+                }
             } catch (IOException ex) {
                 Logger.getLogger(SpecServiceImpl.class.getName()).log(Level.SEVERE, "Error uploading file to Cloudinary", ex);
+                throw new RuntimeException("File upload failed.");
             }
+        } else {
             this.specRepo.addSpec(s);
         }
-
-}
-
-
+    }
 
     @Override
     public boolean updateSpec(Specification s) {
@@ -74,7 +81,7 @@ public class SpecServiceImpl implements SpecService {
 
     @Override
     public List<Specification> searchSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId) {
-        return this.specRepo.searchSpecifications( nameSpec,  credit,  teacherName,  subjectId);
+        return this.specRepo.searchSpecifications(nameSpec, credit, teacherName, subjectId);
     }
 
 }

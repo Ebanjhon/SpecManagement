@@ -20,4 +20,7 @@ public interface UserRepository {
     void addUser(User user);
 
     boolean authUser(String username, String password);
+
+    void updateUser(User user);
+
 }
