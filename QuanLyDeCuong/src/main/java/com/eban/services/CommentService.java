@@ -4,6 +4,7 @@
  */
 package com.eban.services;
 
+import com.eban.DTO.CommentDTO;
 import com.eban.pojo.Comment;
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface CommentService {
     void addComment(Comment comment);
     boolean updateComment(Comment comment);
     boolean deleteComment(int id);
-    List<Comment> getCommentsBySpecId(int specId);
+    List<CommentDTO> getCommentsBySpecId(int specId);
 }

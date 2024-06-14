@@ -137,8 +137,8 @@ public class ApiSpecificationController {
     public ResponseEntity<List<Specification>> searchSpecifications(
             @RequestParam(required = false) String nameSpec,//cho required = fale tức là khi truyền không có thì nó là nul , để không bị lỗi 
             @RequestParam(required = false) Integer credit,
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) String teacherName,
+            @RequestParam(required = false) Integer page,//
+            @RequestParam(required = false) String teacherName,//Lọc theo tên GV
             @RequestParam(required = false) Integer subjectId) {
         List<Specification> specs = this.specService.searchSpecifications(nameSpec, credit ,page,  teacherName, subjectId);
         if (specs == null || specs.isEmpty()) {

@@ -4,6 +4,7 @@
  */
 package com.eban.controllers;
 
+import com.eban.DTO.CommentDTO;
 import com.eban.pojo.Comment;
 import com.eban.pojo.Specification;
 import com.eban.pojo.User;
@@ -32,16 +33,15 @@ public class ApiCommentController {
 
     
     
-    //Lay danh sach commment theo bai luan
     @GetMapping("/comments/spec/{specId}")
-    public ResponseEntity<List<Comment>> getCommentsBySpecId(@PathVariable(value = "specId") int specId) {
-        List<Comment> comments = this.commentService.getCommentsBySpecId(specId);
+    public ResponseEntity<List<CommentDTO>> getCommentsBySpecId(@PathVariable(value = "specId") int specId) {
+        List<CommentDTO> comments = this.commentService.getCommentsBySpecId(specId);
         if (comments == null || comments.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(comments, HttpStatus.OK);
-
     }
+    
     //Tao cmt cha 
     @PostMapping(path = "/comments/spec/{specId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
