@@ -4,6 +4,7 @@
  */
 package com.eban.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -54,9 +55,12 @@ public class Comment implements Serializable {
     private String content;
     @JoinColumn(name = "specID", referencedColumnName = "idSpec")
     @ManyToOne
+    @JsonIgnore
     private Specification specID;
     @JoinColumn(name = "userID", referencedColumnName = "idUser")
     @ManyToOne
+
+    @JsonIgnore
     private User userID;
 
     public Comment() {
@@ -138,5 +142,5 @@ public class Comment implements Serializable {
     public String toString() {
         return "com.eban.pojo.Comment[ idComment=" + idComment + " ]";
     }
-    
+
 }

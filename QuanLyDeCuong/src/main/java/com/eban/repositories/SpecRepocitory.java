@@ -20,5 +20,5 @@ public interface SpecRepocitory {
     boolean deleteSpec(int id);
     List<Specification> getSpecsBySubjectId(int subjectId);
 
-    public List<Specification> searchSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId);
+    public List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page ,String teacherName, Integer subjectId);
 }

@@ -9,12 +9,15 @@ import com.eban.repositories.SpecRepocitory;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,10 +28,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
+@PropertySource("classpath:configs.properties")
 public class SpecRepositoryImpl implements SpecRepocitory {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private Environment env;
 
     @Override
     public List<Specification> getListSpec(Map<String, String> params) {
@@ -40,6 +46,14 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         } else {
             query = session.createQuery("SELECT s FROM Specification s WHERE s.nameSpec LIKE :kw");
             query.setParameter("kw", "%" + kw + "%");
+        }
+
+        String p = params.get("page");
+        if (p != null && !p.isEmpty()) {
+            int pageSize = Integer.parseInt(env.getProperty("PAGE_SIZE_SPEC").toString());
+            int start = (Integer.parseInt(p) - 1) * pageSize;
+            query.setFirstResult(start);
+            query.setMaxResults(pageSize);
         }
         return query.getResultList();
     }
@@ -98,13 +112,13 @@ public class SpecRepositoryImpl implements SpecRepocitory {
     }
 
     @Override
-    public List<Specification> searchSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId) {
+    public List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId) {
         Session session = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();//Tạo Truy vấn SQL động
-        CriteriaQuery<Specification> query = builder.createQuery(Specification.class);//Xác định đối tượng truy vấn 
-        Root<Specification> root = query.from(Specification.class);// dai diẹn cho Spec
+        CriteriaBuilder builder = session.getCriteriaBuilder(); // Tạo Truy vấn SQL động
+        CriteriaQuery<Specification> query = builder.createQuery(Specification.class); // Xác định đối tượng truy vấn 
+        Root<Specification> root = query.from(Specification.class); // Đại diện cho Specification
 
-        Predicate predicate = builder.conjunction();//Tạo cấu Truy vấn 
+        Predicate predicate = builder.conjunction(); // Tạo cấu truy vấn
 
         if (nameSpec != null && !nameSpec.isEmpty()) {
             predicate = builder.and(predicate, builder.like(root.get("nameSpec").as(String.class), "%" + nameSpec + "%"));
@@ -118,11 +132,17 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         if (subjectId != null) {
             predicate = builder.and(predicate, builder.equal(root.get("subjectID").get("idSubject"), subjectId));
         }
-
         query.where(predicate);
 
-        return session.createQuery(query).getResultList();
+        TypedQuery<Specification> typedQuery = session.createQuery(query);
+        if (page != null) {
+            int pageSize = Integer.parseInt(env.getProperty("PAGE_SIZE_SPEC"));
+            int start = (page - 1) * pageSize;
+            typedQuery.setFirstResult(start);
+            typedQuery.setMaxResults(pageSize);
+        }
+
+        return typedQuery.getResultList();
     }
 
 }
- 

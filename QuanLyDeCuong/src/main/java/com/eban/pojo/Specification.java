@@ -76,27 +76,35 @@ public class Specification implements Serializable {
     @Size(min = 1, max = 7)
     @Column(name = "status")
     private String status;
+    @JsonIgnore
     @OneToMany(mappedBy = "specifiID")
     private Set<Specgrande> specgrandeSet;
+    @JsonIgnore
     @OneToMany(mappedBy = "specID")
     private Set<Coursestudy> coursestudySet;
     @JoinColumn(name = "hoiDongID", referencedColumnName = "idHoiDong")
     @ManyToOne
+    @JsonIgnore
     private Hoidong hoiDongID;
     @JoinColumn(name = "subjectID", referencedColumnName = "idSubject")
     @ManyToOne
+    @JsonIgnore
     private Subject subjectID;
     @JoinColumn(name = "typeSpecID", referencedColumnName = "idType")
     @ManyToOne
+    @JsonIgnore
     private Typeofspecifi typeSpecID;
     @JoinColumn(name = "authorID", referencedColumnName = "idUser")
     @ManyToOne
+    @JsonIgnore
     private User authorID;
     @OneToMany(mappedBy = "specID")
+    @JsonIgnore
     private Set<Comment> commentSet;
     @OneToMany(mappedBy = "specID")
+    @JsonIgnore
     private Set<Oderdc> oderdcSet;
-    
+
     @Transient
     private MultipartFile file;
 
@@ -262,7 +270,7 @@ public class Specification implements Serializable {
         return "com.eban.pojo.Specification[ idSpec=" + idSpec + " ]";
     }
 
-     /**
+    /**
      * @return the file
      */
     public MultipartFile getFile() {
@@ -275,5 +283,5 @@ public class Specification implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-    
+
 }

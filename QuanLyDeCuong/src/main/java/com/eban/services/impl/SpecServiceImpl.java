@@ -80,8 +80,8 @@ public class SpecServiceImpl implements SpecService {
     }
 
     @Override
-    public List<Specification> searchSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId) {
-        return this.specRepo.searchSpecifications(nameSpec, credit, teacherName, subjectId);
+    public List<Specification> searchSpecifications(String nameSpec, Integer credit,  Integer page, String teacherName, Integer subjectId) {
+        return this.specRepo.searchSpecifications(nameSpec, credit, page, teacherName, subjectId);
     }
 
 }

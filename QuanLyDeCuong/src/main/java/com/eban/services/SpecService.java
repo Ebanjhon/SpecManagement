@@ -26,6 +26,6 @@ public interface SpecService {
 
     List<Specification> getSpecsBySubjectId(int subjectId);
 
-    List<Specification> searchSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId);
+    List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId);
 
 }
