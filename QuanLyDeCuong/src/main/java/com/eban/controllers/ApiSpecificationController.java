@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,11 +47,13 @@ public class ApiSpecificationController {
     private SpecService specService;
 
     @GetMapping("/specifications")
+    @CrossOrigin
     public ResponseEntity<List<Specification>> listSpec(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.specService.getListSpec(params), HttpStatus.OK);
     }
 
     @GetMapping(path = "/specifications/{idSpec}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
     public ResponseEntity<Specification> retrieve(@PathVariable(value = "idSpec") int id) {
         return new ResponseEntity<>(this.specService.getSpecById(id), HttpStatus.OK);
     }
@@ -59,7 +62,7 @@ public class ApiSpecificationController {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE
     })
-     @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
         Logger.getLogger(ApiSpecificationController.class.getName()).log(Level.INFO, "Params: {0}", params);
         Logger.getLogger(ApiSpecificationController.class.getName()).log(Level.INFO, "Files: {0}", file.length);
@@ -106,6 +109,7 @@ public class ApiSpecificationController {
     }
 
     @PutMapping(path = "/specifications/{idSpec}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
     public ResponseEntity<Specification> updateSpec(@PathVariable(value = "idSpec") int id, @RequestBody Specification spec) {
         spec.setIdSpec(id);
         boolean result = this.specService.updateSpec(spec);
@@ -116,6 +120,7 @@ public class ApiSpecificationController {
     }
 
     @DeleteMapping("/specifications/{idSpec}")
+    @CrossOrigin
     public ResponseEntity<Void> deleteSpec(@PathVariable(value = "idSpec") int id) {
         boolean result = this.specService.deleteSpec(id);
         if (result) {
@@ -124,7 +129,9 @@ public class ApiSpecificationController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 ///Tim theo môn học 
+
     @GetMapping("/specifications/subject/{subjectId}")
+    @CrossOrigin
     public ResponseEntity<List<Specification>> getSpecsBySubjectId(@PathVariable(value = "subjectId") int subjectId) {
         List<Specification> specs = this.specService.getSpecsBySubjectId(subjectId);
         if (specs == null || specs.isEmpty()) {
@@ -132,20 +139,21 @@ public class ApiSpecificationController {
         }
         return new ResponseEntity<>(specs, HttpStatus.OK);
     }
-    
+
     //API tìm kiếm theo từ khóa đc truyền từ param 
     @GetMapping("/searchSpecifications")
+    @CrossOrigin
     public ResponseEntity<List<SpecificationDTO>> searchSpecifications(
             @RequestParam(required = false) String nameSpec,//cho required = fale tức là khi truyền không có thì nó là nul , để không bị lỗi 
             @RequestParam(required = false) Integer credit,
             @RequestParam(required = false) Integer page,//
             @RequestParam(required = false) String teacherName,//Lọc theo tên GV
             @RequestParam(required = false) Integer subjectId) {
-        List<SpecificationDTO> specs = this.specService.searchSpecifications(nameSpec, credit ,page,  teacherName, subjectId);
+        List<SpecificationDTO> specs = this.specService.searchSpecifications(nameSpec, credit, page, teacherName, subjectId);
         if (specs == null || specs.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(specs, HttpStatus.OK);
     }
-    
+
 }
