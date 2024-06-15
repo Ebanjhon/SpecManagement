@@ -17,4 +17,5 @@ public interface CommentService {
     boolean updateComment(Comment comment);
     boolean deleteComment(int id);
     List<CommentDTO> getCommentsBySpecId(int specId);
+    Comment getCommentById(int id); 
 }

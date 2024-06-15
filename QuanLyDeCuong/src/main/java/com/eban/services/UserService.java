@@ -4,6 +4,7 @@
  */
 package com.eban.services;
 
+import com.eban.DTO.ChatUserDTO;
 import com.eban.pojo.User;
 import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;

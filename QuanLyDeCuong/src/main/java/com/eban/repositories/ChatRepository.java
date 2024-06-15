@@ -4,17 +4,17 @@
  */
 package com.eban.repositories;
 
-import com.eban.pojo.Comment;
+import com.eban.DTO.ChatUserDTO;
+import com.eban.DTO.RoomChatDTO;
 import java.util.List;
 
 /**
  *
  * @author nmau4
  */
-public interface CommentRepository {
-    void addComment(Comment comment);
-    boolean updateComment(Comment comment);
-    boolean deleteComment(int id);
-    List<Comment> getCommentsBySpecId(int specId);
-    Comment getCommentById(int id);
+public interface ChatRepository {
+
+    List<RoomChatDTO> findAllChatRoomsWithUsers(Integer userId);
+    
+
 }

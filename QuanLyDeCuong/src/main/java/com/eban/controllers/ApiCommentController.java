@@ -31,8 +31,6 @@ public class ApiCommentController {
     @Autowired
     private CommentService commentService;
 
-    
-    
     @GetMapping("/comments/spec/{specId}")
     @CrossOrigin
     public ResponseEntity<List<CommentDTO>> getCommentsBySpecId(@PathVariable(value = "specId") int specId) {
@@ -42,7 +40,7 @@ public class ApiCommentController {
         }
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
-    
+
     //Tao cmt cha 
     @PostMapping(path = "/comments/spec/{specId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
@@ -66,17 +64,32 @@ public class ApiCommentController {
 
         this.commentService.addComment(comment);
     }
+
     /// Tao CMT con 
     @PostMapping(path = "/comments/parent/{parentId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin
     public void addCommentToParent(@PathVariable(value = "parentId") int parentId, @RequestBody Map<String, String> params) {
         Logger.getLogger(ApiCommentController.class.getName()).log(Level.INFO, "Params: {0}", params);
+        
+        //Tạo commnet cha để lấy id SPec 
+        Comment parentComment = this.commentService.getCommentById(parentId);
+        if (parentComment == null) {
+            throw new RuntimeException("Parent comment not found");
+        }
+        
+        
 
         Comment comment = new Comment();
         comment.setContent(params.get("content"));
         comment.setCmDate(new Date());
         comment.setCmParentID(parentId);
+        
+        // Lấy specID từ comment cha
+        Specification spec = parentComment.getSpecID();
+        comment.setSpecID(spec);
+        
+        
 
         if (params.get("userId") != null) {
             User user = new User();
@@ -90,7 +103,7 @@ public class ApiCommentController {
     @PutMapping(path = "/comments/{commentId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<Comment> updateComment(@PathVariable(value = "commentId") int commentId, @RequestBody Comment comment) {
-        comment.setIdComment(commentId);  
+        comment.setIdComment(commentId);
         boolean result = this.commentService.updateComment(comment);
         if (result) {
             return new ResponseEntity<>(comment, HttpStatus.OK);
