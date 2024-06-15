@@ -88,4 +88,10 @@ public class CommentServiceImpl implements CommentService {
         dto.setAvatar(user.getAvatar());
         return dto;
     }
+
+    @Override
+    public Comment getCommentById(int id) {
+        return this.commentRepo.getCommentById(id);
+
+    }
 }

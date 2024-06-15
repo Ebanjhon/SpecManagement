@@ -69,4 +69,10 @@ public class CommentRepositoryImpl implements CommentRepository {
         // Thực thi câu truy vấn và trả về danh sách kết quả
         return session.createQuery(query).getResultList();
     }
+
+    @Override
+    public Comment getCommentById(int id) {
+        Session session = this.factory.getObject().getCurrentSession(); // Lấy phiên làm việc hiện tại của Hibernate
+        return session.get(Comment.class, id);
+    }
 }

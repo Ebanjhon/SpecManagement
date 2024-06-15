@@ -16,4 +16,5 @@ public interface CommentRepository {
     boolean updateComment(Comment comment);
     boolean deleteComment(int id);
     List<Comment> getCommentsBySpecId(int specId);
+    Comment getCommentById(int id);
 }
