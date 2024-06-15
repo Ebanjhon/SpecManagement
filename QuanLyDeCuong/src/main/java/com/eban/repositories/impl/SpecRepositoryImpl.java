@@ -110,6 +110,10 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         query.setParameter("subjectId", i);
         return query.getResultList();
     }
+    
+    
+    
+    
 
     @Override
     public List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId) {

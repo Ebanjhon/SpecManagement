@@ -4,6 +4,7 @@
  */
 package com.eban.services;
 
+import com.eban.DTO.SpecificationDTO;
 import com.eban.pojo.Specification;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,6 @@ public interface SpecService {
 
     List<Specification> getSpecsBySubjectId(int subjectId);
 
-    List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId);
+    List<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId);
 
 }

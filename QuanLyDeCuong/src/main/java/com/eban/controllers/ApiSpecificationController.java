@@ -4,6 +4,7 @@
  */
 package com.eban.controllers;
 
+import com.eban.DTO.SpecificationDTO;
 import com.eban.pojo.Hoidong;
 import com.eban.pojo.Specification;
 import com.eban.pojo.Subject;
@@ -134,13 +135,13 @@ public class ApiSpecificationController {
     
     //API tìm kiếm theo từ khóa đc truyền từ param 
     @GetMapping("/searchSpecifications")
-    public ResponseEntity<List<Specification>> searchSpecifications(
+    public ResponseEntity<List<SpecificationDTO>> searchSpecifications(
             @RequestParam(required = false) String nameSpec,//cho required = fale tức là khi truyền không có thì nó là nul , để không bị lỗi 
             @RequestParam(required = false) Integer credit,
             @RequestParam(required = false) Integer page,//
             @RequestParam(required = false) String teacherName,//Lọc theo tên GV
             @RequestParam(required = false) Integer subjectId) {
-        List<Specification> specs = this.specService.searchSpecifications(nameSpec, credit ,page,  teacherName, subjectId);
+        List<SpecificationDTO> specs = this.specService.searchSpecifications(nameSpec, credit ,page,  teacherName, subjectId);
         if (specs == null || specs.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

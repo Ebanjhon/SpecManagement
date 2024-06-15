@@ -6,10 +6,18 @@ package com.eban.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.eban.DTO.SpecificationDTO;
+import com.eban.DTO.SubjectDTO;
+import com.eban.DTO.TypeofspecifiDTO;
+import com.eban.DTO.UserDTO;
 import com.eban.pojo.Specification;
+import com.eban.pojo.Subject;
+import com.eban.pojo.Typeofspecifi;
+import com.eban.pojo.User;
 import com.eban.repositories.SpecRepocitory;
 import com.eban.services.SpecService;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -41,7 +49,7 @@ public class SpecServiceImpl implements SpecService {
         return this.specRepo.getSpecById(i);
     }
 
-     @Override
+    @Override
     public void addSpec(Specification s) {
         if (!s.getFile().isEmpty()) {
             try {
@@ -79,9 +87,66 @@ public class SpecServiceImpl implements SpecService {
         return this.specRepo.getSpecsBySubjectId(i);
     }
 
+    //Chuyển đổi DTO 
+    private SpecificationDTO toSpecificationDTO(Specification specification) {
+        SpecificationDTO dto = new SpecificationDTO();
+        dto.setIdSpec(specification.getIdSpec());
+        dto.setNameSpec(specification.getNameSpec());
+        dto.setCredit(specification.getCredit());
+        dto.setContent(specification.getContent());
+        dto.setDateCreate(specification.getDateCreate());
+        dto.setFileSpec(specification.getFileSpec());
+        dto.setStatus(specification.getStatus());
+        dto.setAuthor(toUserDTO(specification.getAuthorID()));
+        dto.setSubject(toSubjectDTO(specification.getSubjectID()));
+        dto.setTypeofspecifi(toTypeofspecifiDTO(specification.getTypeSpecID()));
+
+        return dto;
+    }
+
+    private UserDTO toUserDTO(User user) {
+        if (user == null) {
+            return null;
+        }
+        UserDTO dto = new UserDTO();
+        dto.setIdUser(user.getIdUser());
+        dto.setUsername(user.getUsername());
+        dto.setFirstname(user.getFirstname());
+        dto.setLastname(user.getLastname());
+        dto.setEmail(user.getEmail());
+        dto.setAvatar(user.getAvatar());
+        return dto;
+    }
+
+    private SubjectDTO toSubjectDTO(Subject subject) {
+        if (subject == null) {
+            return null;
+        }
+        SubjectDTO dto = new SubjectDTO();
+        dto.setIdSubject(subject.getIdSubject());
+        dto.setNameSubject(subject.getNameSubject());
+        return dto;
+    }
+
+    private TypeofspecifiDTO toTypeofspecifiDTO(Typeofspecifi typeofspecifi) {
+        if (typeofspecifi == null) {
+            return null;
+        }
+        TypeofspecifiDTO dto = new TypeofspecifiDTO();
+        dto.setIdType(typeofspecifi.getIdType());
+        dto.setNameType(typeofspecifi.getNameType());
+        return dto;
+    }
+
     @Override
-    public List<Specification> searchSpecifications(String nameSpec, Integer credit,  Integer page, String teacherName, Integer subjectId) {
-        return this.specRepo.searchSpecifications(nameSpec, credit, page, teacherName, subjectId);
+    public List<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId) {
+        List<Specification> specifications = this.specRepo.searchSpecifications(nameSpec, credit, page, teacherName, subjectId);
+        List<SpecificationDTO> specificationDTOs = new ArrayList<>();
+        for (Specification specification : specifications) {
+            specificationDTOs.add(toSpecificationDTO(specification));
+        }
+        return specificationDTOs;
+
     }
 
 }
