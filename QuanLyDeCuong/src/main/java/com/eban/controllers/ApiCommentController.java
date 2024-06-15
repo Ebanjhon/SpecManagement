@@ -71,32 +71,23 @@ public class ApiCommentController {
     @CrossOrigin
     public void addCommentToParent(@PathVariable(value = "parentId") int parentId, @RequestBody Map<String, String> params) {
         Logger.getLogger(ApiCommentController.class.getName()).log(Level.INFO, "Params: {0}", params);
-        
         //Tạo commnet cha để lấy id SPec 
         Comment parentComment = this.commentService.getCommentById(parentId);
         if (parentComment == null) {
             throw new RuntimeException("Parent comment not found");
         }
-        
-        
-
         Comment comment = new Comment();
         comment.setContent(params.get("content"));
         comment.setCmDate(new Date());
         comment.setCmParentID(parentId);
-        
         // Lấy specID từ comment cha
         Specification spec = parentComment.getSpecID();
         comment.setSpecID(spec);
-        
-        
-
         if (params.get("userId") != null) {
             User user = new User();
             user.setIdUser(Integer.parseInt(params.get("userId")));
             comment.setUserID(user);
         }
-
         this.commentService.addComment(comment);
     }
 
