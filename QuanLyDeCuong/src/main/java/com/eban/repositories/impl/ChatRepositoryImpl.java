@@ -66,6 +66,7 @@ public class ChatRepositoryImpl implements ChatRepository {
 
     private ChatUserDTO toChatUserDTO(User user, Integer roomId) {
         ChatUserDTO dto = new ChatUserDTO();
+        dto.setIdUser(user.getIdUser());
         dto.setUsername(user.getUsername());
         dto.setFirstname(user.getFirstname());
         dto.setLastname(user.getLastname());

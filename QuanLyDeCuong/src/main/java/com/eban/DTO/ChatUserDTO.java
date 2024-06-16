@@ -9,6 +9,7 @@ package com.eban.DTO;
  * @author nmau4
  */
 public class ChatUserDTO {
+    private Integer idUser;
     private String username;
     private String firstname;
     private String lastname;
@@ -99,5 +100,19 @@ public class ChatUserDTO {
     public void setRoomId(Integer roomId) {
         this.roomId = roomId;
     }
-    
+
+    /**
+     * @return the idUser
+     */
+    public Integer getIdUser() {
+        return idUser;
+    }
+
+    /**
+     * @param idUser the idUser to set
+     */
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
+    }
+
 }
