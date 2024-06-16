@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,16 +73,33 @@ public class ApiUserController {
 
         return new ResponseEntity<>("Thông tin đăng nhập không chính xác!", HttpStatus.BAD_REQUEST);
     }
-    
-    
-    
-    
-    
     // lấy thông tin user hiện tại
     @GetMapping(path = "/current-user", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<CurrentUserDTO> getCurrentUser(Principal p) {
         User u = this.userService.getUserByUsername(p.getName());
+        CurrentUserDTO user = new CurrentUserDTO(
+                u.getIdUser(),
+                u.getUsername(),
+                u.getFirstname(),
+                u.getLastname(),
+                u.getDateOfBirth(),
+                u.getGender(),
+                u.getEmail(),
+                u.getAddress(),
+                u.getPhone(),
+                u.getRole(),
+                u.getActive(),
+                u.getAvatar(),
+                u.getCoin()
+        );
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+    // lấy user byid
+    @GetMapping("/author/{id}")
+    @CrossOrigin // cho phép tất cả các domain truy cập
+    public ResponseEntity<CurrentUserDTO> getAuthor(@PathVariable(value = "id") int id) {
+        User u =this.userService.getUserById(id);
         CurrentUserDTO user = new CurrentUserDTO(
                 u.getIdUser(),
                 u.getUsername(),

@@ -25,4 +25,5 @@ public interface UserService extends UserDetailsService {
 
     void updateUser(User user);
 
+    User getUserById(int id);
 }

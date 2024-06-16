@@ -7,6 +7,7 @@ package com.eban.repositories.impl;
 import com.eban.pojo.User;
 import com.eban.repositories.UserRepository;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -100,6 +101,22 @@ public class UserRepositoryImpl implements UserRepository {
     public void updateUser(User user) {
         Session session = this.factory.getObject().getCurrentSession();
         session.update(user);
+    }
+
+//    @Override
+//    public User getUserById(int id) {
+//        Session session = this.factory.getObject().getCurrentSession();
+//        Query q = session.createNamedQuery("User.findByIdUser");
+//        q.setParameter("idUser", id);
+//        return (User) q.getSingleResult();
+//    }
+    @Override
+    public User getUserById(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("From User WHERE idUser=:idUser");
+        query.setParameter("idUser", id);
+        
+        return (User) query.getSingleResult();
     }
 
 }
