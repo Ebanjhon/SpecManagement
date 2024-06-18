@@ -45,6 +45,7 @@ public class ApiUserController {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE
     })
+    @CrossOrigin
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
         User u = new User();

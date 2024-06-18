@@ -4,6 +4,7 @@
  */
 package com.eban.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -46,6 +47,7 @@ public class Gradingsheet implements Serializable {
     @Column(name = "nameColumn")
     private String nameColumn;
     @OneToMany(mappedBy = "grandeID")
+    @JsonIgnore
     private Set<Specgrande> specgrandeSet;
 
     public Gradingsheet() {

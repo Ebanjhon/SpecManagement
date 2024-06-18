@@ -63,6 +63,7 @@ public class ApiSpecificationController {
         MediaType.MULTIPART_FORM_DATA_VALUE
     })
     @ResponseStatus(HttpStatus.CREATED)
+    @CrossOrigin
     public ResponseEntity<String> create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
         Logger.getLogger(ApiSpecificationController.class.getName()).log(Level.INFO, "Params: {0}", params);
         Logger.getLogger(ApiSpecificationController.class.getName()).log(Level.INFO, "Files: {0}", file.length);

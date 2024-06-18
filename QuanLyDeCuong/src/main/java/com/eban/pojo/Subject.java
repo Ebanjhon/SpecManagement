@@ -4,6 +4,7 @@
  */
 package com.eban.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -46,6 +47,7 @@ public class Subject implements Serializable {
     @Column(name = "nameSubject")
     private String nameSubject;
     @OneToMany(mappedBy = "subjectID")
+    @JsonIgnore
     private Set<Specification> specificationSet;
 
     public Subject() {
@@ -109,5 +111,5 @@ public class Subject implements Serializable {
     public String toString() {
         return "com.eban.pojo.Subject[ idSubject=" + idSubject + " ]";
     }
-    
+
 }
