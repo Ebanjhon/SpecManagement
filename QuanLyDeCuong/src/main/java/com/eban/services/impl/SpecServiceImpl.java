@@ -6,6 +6,7 @@ package com.eban.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.eban.DTO.SearchResultDTO;
 import com.eban.DTO.SpecificationDTO;
 import com.eban.DTO.SubjectDTO;
 import com.eban.DTO.TypeofspecifiDTO;
@@ -144,13 +145,14 @@ public class SpecServiceImpl implements SpecService {
     }
 
     @Override
-    public List<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId) {
+    public SearchResultDTO<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId) {
         List<Specification> specifications = this.specRepo.searchSpecifications(nameSpec, credit, page, teacherName, subjectId);
         List<SpecificationDTO> specificationDTOs = new ArrayList<>();
+        long totalCount = this.specRepo.countSpecifications(nameSpec, credit, teacherName, subjectId);
         for (Specification specification : specifications) {
             specificationDTOs.add(toSpecificationDTO(specification));
         }
-        return specificationDTOs;
+        return new SearchResultDTO<>(specificationDTOs, totalCount);
 
     }
 

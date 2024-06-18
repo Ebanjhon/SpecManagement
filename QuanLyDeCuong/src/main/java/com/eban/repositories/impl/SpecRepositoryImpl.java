@@ -147,6 +147,41 @@ public class SpecRepositoryImpl implements SpecRepocitory {
 
         return typedQuery.getResultList();
     }
+    @Override
+    public long countSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<Specification> root = query.from(Specification.class);
+
+        Predicate predicate = builder.conjunction();
+
+        if (nameSpec != null && !nameSpec.isEmpty()) {
+            predicate = builder.and(predicate, builder.like(root.get("nameSpec").as(String.class), "%" + nameSpec + "%"));
+        }
+        if (credit != null) {
+            predicate = builder.and(predicate, builder.equal(root.get("credit"), credit));
+        }
+        if (teacherName != null && !teacherName.isEmpty()) {
+            predicate = builder.and(predicate, builder.like(root.get("authorID").get("username").as(String.class), "%" + teacherName + "%"));
+        }
+        if (subjectId != null) {
+            predicate = builder.and(predicate, builder.equal(root.get("subjectID").get("idSubject"), subjectId));
+        }
+        query.select(builder.count(root)).where(predicate);
+
+        return session.createQuery(query).getSingleResult();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     @Override
     public Gradingsheet findGradingSheetByName(String name) {
