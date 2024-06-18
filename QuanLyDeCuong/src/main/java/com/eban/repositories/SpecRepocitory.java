@@ -23,7 +23,9 @@ public interface SpecRepocitory {
     List<Specification> getSpecsBySubjectId(int subjectId);
 
     public List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page ,String teacherName, Integer subjectId);
+    long countSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId);
     Gradingsheet findGradingSheetByName(String name);
     void addGradingSheet(Gradingsheet gradingsheet);
     void addSpecgrande(Specgrande specgrande);
+    List<Specgrande> getSpecgrandeBySpecId(int id);
 }

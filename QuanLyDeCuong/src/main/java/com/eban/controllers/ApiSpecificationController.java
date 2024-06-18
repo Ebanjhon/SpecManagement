@@ -4,6 +4,7 @@
  */
 package com.eban.controllers;
 
+import com.eban.DTO.SearchResultDTO;
 import com.eban.DTO.SpecificationDTO;
 import com.eban.pojo.Gradingsheet;
 import com.eban.pojo.Hoidong;
@@ -58,6 +59,13 @@ public class ApiSpecificationController {
     @CrossOrigin
     public ResponseEntity<Specification> retrieve(@PathVariable(value = "idSpec") int id) {
         return new ResponseEntity<>(this.specService.getSpecById(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/specifications/listspecgrande/{idSpec}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public ResponseEntity<List<Specgrande>> getlisGrand(@PathVariable(value = "idSpec") int id) {
+        List<Specgrande> specgrandes = this.specService.getSpecgrandeBySpecId(id);
+        return new ResponseEntity<>(specgrandes, HttpStatus.OK);
     }
 
     @PostMapping(path = "/specifications/", consumes = {
@@ -161,17 +169,17 @@ public class ApiSpecificationController {
     //API tìm kiếm theo từ khóa đc truyền từ param 
     @GetMapping("/searchSpecifications")
     @CrossOrigin
-    public ResponseEntity<List<SpecificationDTO>> searchSpecifications(
-            @RequestParam(required = false) String nameSpec,//cho required = fale tức là khi truyền không có thì nó là nul , để không bị lỗi 
+    public ResponseEntity<SearchResultDTO<SpecificationDTO>> searchSpecifications(
+            @RequestParam(required = false) String nameSpec,
             @RequestParam(required = false) Integer credit,
-            @RequestParam(required = false) Integer page,//
-            @RequestParam(required = false) String teacherName,//Lọc theo tên GV
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) String teacherName,
             @RequestParam(required = false) Integer subjectId) {
-        List<SpecificationDTO> specs = this.specService.searchSpecifications(nameSpec, credit, page, teacherName, subjectId);
-        if (specs == null || specs.isEmpty()) {
+        SearchResultDTO<SpecificationDTO> searchResult = this.specService.searchSpecifications(nameSpec, credit, page, teacherName, subjectId);
+        if (searchResult.getResults().isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(specs, HttpStatus.OK);
+        return new ResponseEntity<>(searchResult, HttpStatus.OK);
     }
 
 }
