@@ -4,6 +4,8 @@
  */
 package com.eban.repositories;
 
+import com.eban.pojo.Gradingsheet;
+import com.eban.pojo.Specgrande;
 import com.eban.pojo.Specification;
 import java.util.List;
 import java.util.Map;
@@ -21,4 +23,7 @@ public interface SpecRepocitory {
     List<Specification> getSpecsBySubjectId(int subjectId);
 
     public List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page ,String teacherName, Integer subjectId);
+    Gradingsheet findGradingSheetByName(String name);
+    void addGradingSheet(Gradingsheet gradingsheet);
+    void addSpecgrande(Specgrande specgrande);
 }

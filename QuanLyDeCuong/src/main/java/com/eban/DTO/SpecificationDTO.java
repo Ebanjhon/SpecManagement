@@ -5,6 +5,7 @@
 package com.eban.DTO;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -49,6 +50,7 @@ public class SpecificationDTO {
     private UserDTO author;
     private SubjectDTO subject;
     private TypeofspecifiDTO typeofspecifi;
+//    private List<GradingDTO> grading;
 
     /**
      * @return the idSpec

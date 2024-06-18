@@ -5,40 +5,39 @@
 package com.eban.repositories.impl;
 
 import com.eban.pojo.Gradingsheet;
-import com.eban.repositories.GrandingSheetRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import com.eban.repositories.GradingRepository;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Admin
+ * @author nmau4
  */
 @Repository
 @Transactional
-public class GrandingSheetRepositoryImpl implements GrandingSheetRepository {
+public class GradingRepositoryImpl implements GradingRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
-    public List<Gradingsheet> getGradings() {
+    public void addGrad(Gradingsheet grand) {
         Session session = this.factory.getObject().getCurrentSession();
-        Query query = session.createNamedQuery("Gradingsheet.findAll");
-        return query.getResultList();
+        session.save(grand);
+
     }
 
     @Override
-    public void creatGradingSheet(Gradingsheet grading) {
+    public List<Gradingsheet> getGrads() {
         Session session = this.factory.getObject().getCurrentSession();
-        try {
-            session.save(grading);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        Query q = session.createNamedQuery("Gradingsheet.findAll");
+        return q.getResultList();
+
     }
+
 }

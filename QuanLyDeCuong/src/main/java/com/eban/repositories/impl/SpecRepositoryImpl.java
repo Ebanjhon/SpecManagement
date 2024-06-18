@@ -4,10 +4,13 @@
  */
 package com.eban.repositories.impl;
 
+import com.eban.pojo.Gradingsheet;
+import com.eban.pojo.Specgrande;
 import com.eban.pojo.Specification;
 import com.eban.repositories.SpecRepocitory;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -110,10 +113,6 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         query.setParameter("subjectId", i);
         return query.getResultList();
     }
-    
-    
-    
-    
 
     @Override
     public List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId) {
@@ -147,6 +146,30 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         }
 
         return typedQuery.getResultList();
+    }
+
+    @Override
+    public Gradingsheet findGradingSheetByName(String name) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("SELECT g FROM Gradingsheet g WHERE g.nameColumn = :nameColumn");
+        query.setParameter("nameColumn", name);
+        try {
+            return (Gradingsheet) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // 
+        }
+    }
+
+    @Override
+    public void addGradingSheet(Gradingsheet gradingsheet) {
+        Session session = this.factory.getObject().getCurrentSession();
+        session.save(gradingsheet);
+    }
+
+    @Override
+    public void addSpecgrande(Specgrande specgrande) {
+        Session session = this.factory.getObject().getCurrentSession();
+        session.save(specgrande);
     }
 
 }

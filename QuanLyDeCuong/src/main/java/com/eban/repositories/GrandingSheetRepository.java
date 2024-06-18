@@ -14,4 +14,6 @@ import java.util.List;
 public interface GrandingSheetRepository {
 
     List<Gradingsheet> getGradings();
+    
+    void creatGradingSheet(Gradingsheet grading);
 }

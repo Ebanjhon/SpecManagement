@@ -5,28 +5,31 @@
 package com.eban.services.impl;
 
 import com.eban.pojo.Gradingsheet;
-import com.eban.repositories.GrandingSheetRepository;
-import com.eban.services.GrandingSheetService;
+import com.eban.repositories.GradingRepository;
+import com.eban.services.GradingService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Admin
+ * @author nmau4
  */
 @Service
-public class GrandingSheetServiceImpl implements GrandingSheetService{
+public class GradingServiceImpl implements GradingService{
+    
+    
     @Autowired
-    private GrandingSheetRepository gradingRepo;
+    public GradingRepository gradingRepo;
 
     @Override
-    public List<Gradingsheet> getGradings() {
-        return this.gradingRepo.getGradings();
+    public void addGrad(Gradingsheet grand) {
+        this.gradingRepo.addGrad(grand);
     }
 
     @Override
-    public void creatGradingSheet(Gradingsheet grading) {
-        this.gradingRepo.creatGradingSheet(grading);
+    public List<Gradingsheet> getGrads() {
+        return this.gradingRepo.getGrads();
     }
+    
 }

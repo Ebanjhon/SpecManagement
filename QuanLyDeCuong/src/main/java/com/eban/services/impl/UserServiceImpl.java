@@ -80,7 +80,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        this.userRepo.updateUser(user);
+        if (!user.getFile().isEmpty()) {
+            try {
+                Map res = this.cloudinary.uploader().upload(user.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                user.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.userRepo.updateUser(user);
+        }
+
     }
 
     @Override

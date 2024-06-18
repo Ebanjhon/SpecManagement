@@ -5,7 +5,10 @@
 package com.eban.services;
 
 import com.eban.DTO.SpecificationDTO;
+import com.eban.pojo.Gradingsheet;
+import com.eban.pojo.Specgrande;
 import com.eban.pojo.Specification;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -28,5 +31,9 @@ public interface SpecService {
     List<Specification> getSpecsBySubjectId(int subjectId);
 
     List<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId);
+    
+    Gradingsheet findGradingSheetByName(String name);
+    void addGradingSheet(Gradingsheet gradingsheet);
+    void addSpecgrande(Specgrande specgrande);
 
 }

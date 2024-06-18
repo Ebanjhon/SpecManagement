@@ -5,7 +5,9 @@
 package com.eban.controllers;
 
 import com.eban.DTO.SpecificationDTO;
+import com.eban.pojo.Gradingsheet;
 import com.eban.pojo.Hoidong;
+import com.eban.pojo.Specgrande;
 import com.eban.pojo.Specification;
 import com.eban.pojo.Subject;
 import com.eban.pojo.Typeofspecifi;
@@ -64,16 +66,14 @@ public class ApiSpecificationController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin
-    public ResponseEntity<String> create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
-        Logger.getLogger(ApiSpecificationController.class.getName()).log(Level.INFO, "Params: {0}", params);
-        Logger.getLogger(ApiSpecificationController.class.getName()).log(Level.INFO, "Files: {0}", file.length);
+    public ResponseEntity<String> create(@RequestParam Map<String, String> params, @RequestPart(required = false) MultipartFile[] file) {
 
         Specification spec = new Specification();
         spec.setNameSpec(params.get("nameSpec"));
         spec.setCredit(Integer.parseInt(params.get("credit")));
         spec.setContent(params.get("content"));
         spec.setDateCreate(new Date());
-        spec.setStatus(params.get("status"));
+        spec.setStatus("editing");
 
         if (params.get("subjectId") != null) {
             Subject subject = new Subject();
@@ -97,7 +97,7 @@ public class ApiSpecificationController {
             spec.setHoiDongID(hoiDong);
         }
 
-        if (file.length > 0) {
+        if (file != null && file.length > 0) {
             String fileName = file[0].getOriginalFilename();
             if (fileName != null && (fileName.endsWith(".doc") || fileName.endsWith(".docx") || fileName.endsWith(".pdf"))) {
                 spec.setFile(file[0]);
@@ -105,8 +105,25 @@ public class ApiSpecificationController {
                 return new ResponseEntity<>("Invalid file format. Only .doc, .docx, and .pdf are allowed.", HttpStatus.BAD_REQUEST);
             }
         }
+        
         this.specService.addSpec(spec);
-        return new ResponseEntity<>("Specification created successfully", HttpStatus.CREATED);
+
+        //Cấu hình add Cot diem 
+        // Parse the grading data
+        String[] idGradingSheets = params.get("idgradingSheets").split(",");
+        String[] gradWaves = params.get("gradWaves").split(",");
+
+        for (int i = 0; i < idGradingSheets.length; i++) {
+            Specgrande specgrande = new Specgrande();
+            Gradingsheet gradingSheet = new Gradingsheet();
+            gradingSheet.setIdGrade(Integer.parseInt(idGradingSheets[i]));
+            specgrande.setGrandeID(gradingSheet);
+            specgrande.setSpecifiID(spec);
+            specgrande.setWeight(new BigDecimal(gradWaves[i]));
+            this.specService.addSpecgrande(specgrande);
+        }
+
+        return new ResponseEntity<>("ok 201", HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/specifications/{idSpec}", consumes = MediaType.APPLICATION_JSON_VALUE)

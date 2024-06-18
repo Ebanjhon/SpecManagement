@@ -9,12 +9,12 @@ import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author nmau4
  */
-public interface GrandingSheetService {
+public interface GradingService {
 
-    List<Gradingsheet> getGradings();
+    public void addGrad(Gradingsheet grand);
 
-    void creatGradingSheet(Gradingsheet grading);
+    List<Gradingsheet> getGrads();
 
 }
