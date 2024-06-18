@@ -8,12 +8,15 @@ import com.eban.DTO.SearchResultDTO;
 import com.eban.DTO.SpecificationDTO;
 import com.eban.pojo.Gradingsheet;
 import com.eban.pojo.Hoidong;
+import com.eban.pojo.Oderdc;
 import com.eban.pojo.Specgrande;
 import com.eban.pojo.Specification;
 import com.eban.pojo.Subject;
 import com.eban.pojo.Typeofspecifi;
 import com.eban.pojo.User;
+import com.eban.services.OderdcService;
 import com.eban.services.SpecService;
+import com.eban.services.UserService;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -49,8 +52,16 @@ public class ApiSpecificationController {
     @Autowired
     private SpecService specService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private OderdcService oderdcService;
+    
+
     @GetMapping("/specifications")
     @CrossOrigin
+
     public ResponseEntity<List<Specification>> listSpec(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.specService.getListSpec(params), HttpStatus.OK);
     }
@@ -180,6 +191,36 @@ public class ApiSpecificationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(searchResult, HttpStatus.OK);
+    }
+
+    //API mua Spec 
+    @PostMapping("/buySpec")
+    @CrossOrigin
+    public ResponseEntity<String> buySpec(@RequestParam("userId") int userId, @RequestParam("specId") int specId) {
+        User user = userService.getUserById(userId);
+        Specification spec = specService.getSpecById(specId);
+
+        if (user == null) {
+            return ResponseEntity.badRequest().body("Nguoi dung khong ton tai");
+        }
+        if (spec == null) {
+            return ResponseEntity.badRequest().body("De cuong khong ton tai");
+        }
+
+        // Seting Coin 
+        int cost = 1; // Default cost is 1 coin
+
+        if (user.getCoin() < cost) {
+            return ResponseEntity.badRequest().body("khong du coin");
+        }
+
+        user.setCoin(user.getCoin() - cost);
+        userService.updateUserWhenBuySpec(user);
+        Oderdc oderdc = new Oderdc();
+        oderdc.setSpecID(spec);
+        oderdc.setUserID(user);
+        this.oderdcService.addOderdc(oderdc);
+        return ResponseEntity.ok("Buy Spec successfully");
     }
 
 }

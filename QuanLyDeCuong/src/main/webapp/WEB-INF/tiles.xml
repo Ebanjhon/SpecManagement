@@ -60,6 +60,17 @@
     </definition>
     
     
+    <definition name="ordersuccess" extends="baseLayout">
+        <put-attribute name="title" value="Order Success" />
+        <put-attribute name="content" value="/WEB-INF/pages/ordersuccess.jsp" />
+    </definition>
+    
+    <definition name="orderfail" extends="baseLayout">
+        <put-attribute name="title" value="Order Fail" />
+        <put-attribute name="content" value="/WEB-INF/pages/orderfail.jsp" />
+    </definition>
+    
+    
     
     
 </tiles-definitions>

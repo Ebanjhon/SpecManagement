@@ -96,6 +96,17 @@ public class UserServiceImpl implements UserService {
     public User getUserById(int id) {
         return this.userRepo.getUserById(id);
     }
+
+    @Override
+    public void updateUserCoin(int id, int coin) {
+        this.userRepo.updateUserCoin(id, coin);
+    }
+
+    @Override
+    public void updateUserWhenBuySpec(User user) {
+        
+        this.userRepo.updateUserWhenBuySpec(user);
+    }
     
     
     
