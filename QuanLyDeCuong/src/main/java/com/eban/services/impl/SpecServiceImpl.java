@@ -10,6 +10,8 @@ import com.eban.DTO.SpecificationDTO;
 import com.eban.DTO.SubjectDTO;
 import com.eban.DTO.TypeofspecifiDTO;
 import com.eban.DTO.UserDTO;
+import com.eban.pojo.Gradingsheet;
+import com.eban.pojo.Specgrande;
 import com.eban.pojo.Specification;
 import com.eban.pojo.Subject;
 import com.eban.pojo.Typeofspecifi;
@@ -17,6 +19,7 @@ import com.eban.pojo.User;
 import com.eban.repositories.SpecRepocitory;
 import com.eban.services.SpecService;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +54,11 @@ public class SpecServiceImpl implements SpecService {
 
     @Override
     public void addSpec(Specification s) {
-        if (!s.getFile().isEmpty()) {
+        // Nếu không có file, tiến hành thêm Specification vào database
+        if (s.getFile() == null || s.getFile().isEmpty()) {
+            this.specRepo.addSpec(s);
+        } else {
+            // Nếu có file, tiến hành upload file lên Cloudinary trước khi thêm Specification
             try {
                 String fileName = s.getFile().getOriginalFilename();
                 if (fileName != null && (fileName.endsWith(".doc") || fileName.endsWith(".docx") || fileName.endsWith(".pdf"))) {
@@ -67,8 +74,6 @@ public class SpecServiceImpl implements SpecService {
                 Logger.getLogger(SpecServiceImpl.class.getName()).log(Level.SEVERE, "Error uploading file to Cloudinary", ex);
                 throw new RuntimeException("File upload failed.");
             }
-        } else {
-            this.specRepo.addSpec(s);
         }
     }
 
@@ -147,6 +152,21 @@ public class SpecServiceImpl implements SpecService {
         }
         return specificationDTOs;
 
+    }
+
+    @Override
+    public Gradingsheet findGradingSheetByName(String name) {
+        return this.specRepo.findGradingSheetByName(name);
+    }
+
+    @Override
+    public void addGradingSheet(Gradingsheet gradingsheet) {
+        this.specRepo.addGradingSheet(gradingsheet);
+    }
+
+    @Override
+    public void addSpecgrande(Specgrande specgrande) {
+        this.specRepo.addSpecgrande(specgrande);
     }
 
 }

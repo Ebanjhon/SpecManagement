@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api")
 public class ApiUserController {
+
     @Autowired
     private BCryptPasswordEncoder passswordEncoder;
     @Autowired
@@ -45,6 +47,7 @@ public class ApiUserController {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE
     })
+    @CrossOrigin
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
         User u = new User();
@@ -57,12 +60,38 @@ public class ApiUserController {
         u.setEmail(params.get("email"));
         u.setGender(params.get("gender"));
         u.setActive(true);
-        if (file.length > 0)
+        if (file.length > 0) {
             u.setFile(file[0]);
+        }
 
         this.userService.addUser(u);
     }
-    
+
+    // Chỉnh sửa User 
+    @PutMapping(path = "/users/update", consumes = {
+        MediaType.APPLICATION_JSON_VALUE,
+        MediaType.MULTIPART_FORM_DATA_VALUE
+    })
+    @CrossOrigin
+    @ResponseStatus(HttpStatus.OK)
+    public void updateUser(@RequestParam Map<String, String> params, @RequestPart(required = false) MultipartFile[] file) {
+        User u = this.userService.getUserByUsername(params.get("username"));
+        if (u != null) {
+            u.setFirstname(params.get("firstName"));
+            u.setLastname(params.get("lastName"));
+            if (params.containsKey("password")) {
+                u.setPassword(this.passswordEncoder.encode(params.get("password")));
+            }
+            u.setRole(params.get("role"));
+            u.setEmail(params.get("email"));
+            u.setGender(params.get("gender"));
+            if (file != null && file.length > 0) {
+                u.setFile(file[0]);
+            }
+            this.userService.updateUser(u);
+        }
+    }
+
     @PostMapping("/login")
     @CrossOrigin
     public ResponseEntity<String> login(@RequestBody User user) {
@@ -73,6 +102,7 @@ public class ApiUserController {
 
         return new ResponseEntity<>("Thông tin đăng nhập không chính xác!", HttpStatus.BAD_REQUEST);
     }
+
     // lấy thông tin user hiện tại
     @GetMapping(path = "/current-user", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
@@ -95,11 +125,12 @@ public class ApiUserController {
         );
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
     // lấy user byid
     @GetMapping("/author/{id}")
     @CrossOrigin // cho phép tất cả các domain truy cập
     public ResponseEntity<CurrentUserDTO> getAuthor(@PathVariable(value = "id") int id) {
-        User u =this.userService.getUserById(id);
+        User u = this.userService.getUserById(id);
         CurrentUserDTO user = new CurrentUserDTO(
                 u.getIdUser(),
                 u.getUsername(),
