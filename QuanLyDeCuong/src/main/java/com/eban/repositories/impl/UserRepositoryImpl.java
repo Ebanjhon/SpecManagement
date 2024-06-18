@@ -115,8 +115,21 @@ public class UserRepositoryImpl implements UserRepository {
         Session session = this.factory.getObject().getCurrentSession();
         Query query = session.createQuery("From User WHERE idUser=:idUser");
         query.setParameter("idUser", id);
-        
+
         return (User) query.getSingleResult();
+    }
+
+    @Override
+    public void updateUserCoin(int id, int coin) {
+        Session session = this.factory.getObject().getCurrentSession();
+        User user = session.get(User.class, id);
+        if (user != null) {
+            int currentcoin = user.getCoin();
+            user.setCoin(currentcoin + coin );
+            session.update(user);
+        } else {
+            throw new RuntimeException("User not found for ID: " + id);
+        }
     }
 
 }

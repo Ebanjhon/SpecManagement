@@ -26,4 +26,5 @@ public interface UserService extends UserDetailsService {
     void updateUser(User user);
 
     User getUserById(int id);
+    void updateUserCoin(int id, int coin); // Thêm phương thức này
 }
