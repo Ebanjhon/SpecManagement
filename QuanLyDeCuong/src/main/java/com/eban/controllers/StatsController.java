@@ -28,8 +28,6 @@ public class StatsController {
         model.addAttribute("totalStudents", this.statsService.countStudents());
         model.addAttribute("specsBySubject", this.statsService.statsSpecsBySubject());
         model.addAttribute("specsByStatus", this.statsService.statsSpecsByStatus());
-        model.addAttribute("commentsBySpec", this.statsService.statsCommentsBySpec());
-        model.addAttribute("avgScoresBySpec", this.statsService.statsAvgScoresBySpec());
 
         return "stats";
     }

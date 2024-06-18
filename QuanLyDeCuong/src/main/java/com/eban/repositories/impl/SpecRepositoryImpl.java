@@ -172,4 +172,12 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         session.save(specgrande);
     }
 
+    @Override
+    public List<Specgrande> getSpecgrandeBySpecId(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("SELECT sg FROM Specgrande sg WHERE sg.specifiID.idSpec = :specId");
+        query.setParameter("specId", id);
+        return query.getResultList();
+    }
+
 }

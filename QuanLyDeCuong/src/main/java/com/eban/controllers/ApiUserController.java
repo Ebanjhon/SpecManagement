@@ -5,6 +5,7 @@
 package com.eban.controllers;
 
 import com.eban.DTO.CurrentUserDTO;
+import com.eban.components.EmailUtil;
 import com.eban.components.JwtService;
 import com.eban.pojo.User;
 import com.eban.services.UserService;
@@ -65,6 +66,21 @@ public class ApiUserController {
         }
 
         this.userService.addUser(u);
+
+        // Gửi email thông báo
+        String to = u.getEmail();
+        String subject = "Tạo tài khoản thành công";
+        String text = "<p>Chào " + u.getFirstname() + " " + u.getLastname() + ",</p>"
+                + "<p>Tài khoản của bạn đã được tạo thành công với thông tin như sau:</p>"
+                + "<ul>"
+                + "<li>Tên đăng nhập: " + u.getUsername() + "</li>"
+                + "<li>Email: " + u.getEmail() + "</li>"
+                + "<li>Vai trò: " + u.getRole() + "</li>"
+                + "</ul>"
+                + "<p>Đề nghị cập nhât những thông tin còn thiếu sau khi đăng nhâp.</p>"
+                +"<p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>";
+
+        EmailUtil.sendEmail(to, subject, text);
     }
 
     // Chỉnh sửa User 

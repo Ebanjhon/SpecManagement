@@ -59,6 +59,13 @@ public class ApiSpecificationController {
     public ResponseEntity<Specification> retrieve(@PathVariable(value = "idSpec") int id) {
         return new ResponseEntity<>(this.specService.getSpecById(id), HttpStatus.OK);
     }
+    
+    @GetMapping(path = "/specifications/listspecgrande/{idSpec}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public ResponseEntity<List<Specgrande>> getlisGrand(@PathVariable(value = "idSpec") int id) {
+        List<Specgrande> specgrandes = this.specService.getSpecgrandeBySpecId(id);
+        return new ResponseEntity<>(specgrandes, HttpStatus.OK);
+    }
 
     @PostMapping(path = "/specifications/", consumes = {
         MediaType.APPLICATION_JSON_VALUE,

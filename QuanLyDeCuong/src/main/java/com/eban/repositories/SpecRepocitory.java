@@ -26,4 +26,5 @@ public interface SpecRepocitory {
     Gradingsheet findGradingSheetByName(String name);
     void addGradingSheet(Gradingsheet gradingsheet);
     void addSpecgrande(Specgrande specgrande);
+    List<Specgrande> getSpecgrandeBySpecId(int id);
 }
