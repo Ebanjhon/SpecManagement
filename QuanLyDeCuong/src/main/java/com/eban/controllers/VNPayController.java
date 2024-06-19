@@ -1,5 +1,6 @@
 package com.eban.controllers;
 
+import com.eban.pojo.Oderdc;
 import com.eban.services.VNPayService;
 import com.eban.services.UserService;
 import com.eban.pojo.User;
@@ -54,10 +55,10 @@ public class VNPayController {
             if (user != null) {
                 int coins = Integer.parseInt(totalPrice) / 100; // Giả sử mỗi 100 VND = 1 coin
                 userService.updateUserCoin(user.getIdUser(), user.getCoin() + coins);
-                logger.info("User ID: " + user.getIdUser());
-                logger.info("Current Coins: " + user.getCoin());
-                logger.info("Coins to be added: " + coins);
-                logger.info("Updated Coins: " + (user.getCoin() + coins));
+//                logger.info("User ID: " + user.getIdUser());
+//                logger.info("Current Coins: " + user.getCoin());
+//                logger.info("Coins to be added: " + coins);
+//                logger.info("Updated Coins: " + (user.getCoin() + coins));
             } else {
                 logger.warning("User not found for username: " + orderInfo);
             }

@@ -26,6 +26,6 @@ public interface UserRepository {
     User getUserById(int id);
 
     void updateUserCoin(int id, int coin);
-    
 
+    void updateUserWhenBuySpec(User user);
 }

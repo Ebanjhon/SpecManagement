@@ -132,4 +132,10 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Override
+    public void updateUserWhenBuySpec(User user) {
+        Session session = this.factory.getObject().getCurrentSession();
+        session.update(user);
+    }
+
 }
