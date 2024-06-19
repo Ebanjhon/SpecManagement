@@ -38,4 +38,14 @@ public class ApiChatController {
         }
         return new ResponseEntity<>(roomChatDTOs, HttpStatus.OK);
     }
+
+    // API tìm người dùng theo username
+    @GetMapping("/users/searchusername")
+    public ResponseEntity<List<ChatUserDTO>> searchUsersByUsername(@RequestParam String username) {
+        List<ChatUserDTO> users = chatService.findUsersByUsername(username);
+        if (users == null || users.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 }

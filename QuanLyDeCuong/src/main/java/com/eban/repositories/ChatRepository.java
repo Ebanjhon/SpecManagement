@@ -15,6 +15,7 @@ import java.util.List;
 public interface ChatRepository {
 
     List<RoomChatDTO> findAllChatRoomsWithUsers(Integer userId);
+    List<ChatUserDTO> findUsersByUsername(String username);
     
 
 }

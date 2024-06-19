@@ -30,4 +30,9 @@ public class ChatServiceImpl implements ChatService {
         return chatRepo.findAllChatRoomsWithUsers(userId);
     }
 
+    @Override
+    public List<ChatUserDTO> findUsersByUsername(String username) {
+        return chatRepo.findUsersByUsername(username);
+    }
+
 }

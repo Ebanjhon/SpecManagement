@@ -75,4 +75,28 @@ public class ChatRepositoryImpl implements ChatRepository {
         dto.setRoomId(roomId);
         return dto;
     }
+
+    @Override
+    public List<ChatUserDTO> findUsersByUsername(String username) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Query query = session.createQuery("FROM User WHERE username LIKE :username");
+        query.setParameter("username", "%" + username + "%");
+        List<User> users = query.getResultList();
+        List<ChatUserDTO> userDTOs = new ArrayList<ChatUserDTO>();
+        for (User user : users) {
+            userDTOs.add(toChatUserDTO(user));
+        }
+        return userDTOs;
+    }
+
+    private ChatUserDTO toChatUserDTO(User user) {
+        ChatUserDTO dto = new ChatUserDTO();
+        dto.setIdUser(user.getIdUser());
+        dto.setUsername(user.getUsername());
+        dto.setFirstname(user.getFirstname());
+        dto.setLastname(user.getLastname());
+        dto.setRole(user.getRole());
+        dto.setAvatar(user.getAvatar());
+        return dto;
+    }
 }
