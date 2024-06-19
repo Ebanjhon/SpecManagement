@@ -14,4 +14,7 @@ import java.util.List;
  */
 public interface ChatService {
     List<RoomChatDTO> findAllChatRoomsWithUsers(Integer userId);
+    
+    // Phương thức  để tìm người dùng theo tên
+    List<ChatUserDTO> findUsersByUsername(String username);
 }
