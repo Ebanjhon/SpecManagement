@@ -71,6 +71,7 @@ public class ApiUserController {
         u.setEmail(params.get("email"));
         u.setGender(params.get("gender"));
         u.setActive(true);
+        u.setCoin(2);
         if (file.length > 0) {
             u.setFile(file[0]);
         }
