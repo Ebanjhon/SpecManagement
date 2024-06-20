@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  *
@@ -29,6 +30,9 @@ import java.util.logging.Logger;
  */
 @Service("userDetailsService")
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepo;
@@ -80,16 +84,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        if (!user.getFile().isEmpty()) {
+        if (user.getFile() != null && !user.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(user.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
                 user.setAvatar(res.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.userRepo.updateUser(user);
         }
 
+        // Luôn luôn cập nhật người dùng vào cơ sở dữ liệu
+        this.userRepo.updateUser(user);
     }
 
     @Override
@@ -104,11 +109,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserWhenBuySpec(User user) {
-        
+
         this.userRepo.updateUserWhenBuySpec(user);
     }
-    
-    
-    
+
+    @Override
+    public boolean changePassword(int userId, String oldPassword, String newPassword) {
+        User user = this.getUserById(userId);
+        if (user != null && checkPassword(user, oldPassword)) {
+            user.setPassword(this.passwordEncoder.encode(newPassword));
+            this.updateUser(user);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkPassword(User user, String rawPassword) {
+
+        return passwordEncoder.matches(rawPassword, user.getPassword());//so sánh mk người dung nhap sau khi ma hoa voi mk db 
+
+    }
 
 }

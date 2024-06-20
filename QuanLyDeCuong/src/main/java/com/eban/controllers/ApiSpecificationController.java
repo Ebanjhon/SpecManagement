@@ -57,7 +57,6 @@ public class ApiSpecificationController {
 
     @Autowired
     private OderdcService oderdcService;
-    
 
     @GetMapping("/specifications")
     @CrossOrigin
@@ -143,15 +142,68 @@ public class ApiSpecificationController {
         return new ResponseEntity<>("Specification created successfully", HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "/specifications/{idSpec}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/specifications/update/{idSpec}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @CrossOrigin
-    public ResponseEntity<Specification> updateSpec(@PathVariable(value = "idSpec") int id, @RequestBody Specification spec) {
-        spec.setIdSpec(id);
-        boolean result = this.specService.updateSpec(spec);
-        if (result) {
-            return new ResponseEntity<>(spec, HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> updateSpec(
+            @PathVariable(value = "idSpec") int id,
+            @RequestParam(required = false) String nameSpec,
+            @RequestParam(required = false) Integer credit,
+            @RequestParam(required = false) String content,
+            @RequestParam(required = false) String subjectId,
+            @RequestParam(required = false) String typeSpecId,
+            @RequestParam(required = false) String authorId,
+            @RequestParam(required = false) String hoiDongID,
+            @RequestPart(required = false) MultipartFile[] file) {
+
+        Specification spec = this.specService.getSpecById(id);
+        if (spec == null) {
+            return ResponseEntity.badRequest().body("Specification not found");
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        if (nameSpec != null) {
+            spec.setNameSpec(nameSpec);
+        }
+        if (credit != null) {
+            spec.setCredit(credit);
+        }
+        if (content != null) {
+            spec.setContent(content);
+        }
+        spec.setDateCreate(new Date());
+        spec.setStatus("editing");
+
+        if (subjectId != null) {
+            Subject subject = new Subject();
+            subject.setIdSubject(Integer.parseInt(subjectId));
+            spec.setSubjectID(subject);
+        }
+        if (typeSpecId != null) {
+            Typeofspecifi typeSpec = new Typeofspecifi();
+            typeSpec.setIdType(Integer.parseInt(typeSpecId));
+            spec.setTypeSpecID(typeSpec);
+        }
+        if (authorId != null) {
+            User author = new User();
+            author.setIdUser(Integer.parseInt(authorId));
+            spec.setAuthorID(author);
+        }
+        if (hoiDongID != null) {
+            Hoidong hoiDong = new Hoidong();
+            hoiDong.setIdHoiDong(Integer.parseInt(hoiDongID));
+            spec.setHoiDongID(hoiDong);
+        }
+        if (file != null && file.length > 0) {
+            String fileName = file[0].getOriginalFilename();
+            if (fileName != null && (fileName.endsWith(".doc") || fileName.endsWith(".docx") || fileName.endsWith(".pdf"))) {
+                spec.setFile(file[0]);
+            } else {
+                return new ResponseEntity<>("Invalid file format. Only .doc, .docx, and .pdf are allowed.", HttpStatus.BAD_REQUEST);
+            }
+        }
+        this.specService.updateSpec(spec);
+
+        return ResponseEntity.ok("Specification updated successfully");
     }
 
     @DeleteMapping("/specifications/{idSpec}")
@@ -221,5 +273,5 @@ public class ApiSpecificationController {
         this.oderdcService.addOderdc(oderdc);
         return ResponseEntity.ok("Buy Spec successfully");
     }
-    
+
 }

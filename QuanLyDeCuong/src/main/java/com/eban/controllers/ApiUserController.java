@@ -10,6 +10,9 @@ import com.eban.components.JwtService;
 import com.eban.pojo.User;
 import com.eban.services.UserService;
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -78,34 +81,60 @@ public class ApiUserController {
                 + "<li>Vai trò: " + u.getRole() + "</li>"
                 + "</ul>"
                 + "<p>Đề nghị cập nhât những thông tin còn thiếu sau khi đăng nhâp.</p>"
-                +"<p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>";
+                + "<p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>";
 
         EmailUtil.sendEmail(to, subject, text);
     }
 
     // Chỉnh sửa User 
-    @PutMapping(path = "/users/update", consumes = {
+    @PostMapping(path = "/users/update/{userId}", consumes = {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE
     })
     @CrossOrigin
     @ResponseStatus(HttpStatus.OK)
-    public void updateUser(@RequestParam Map<String, String> params, @RequestPart(required = false) MultipartFile[] file) {
-        User u = this.userService.getUserByUsername(params.get("username"));
+    public ResponseEntity<String> updateUser(
+            @RequestParam Map<String, String> params,
+            @RequestPart(required = false) MultipartFile[] file,
+            @PathVariable("userId") int userId
+    ) {
+        User u = this.userService.getUserById(userId);
         if (u != null) {
-            u.setFirstname(params.get("firstName"));
-            u.setLastname(params.get("lastName"));
-            if (params.containsKey("password")) {
-                u.setPassword(this.passswordEncoder.encode(params.get("password")));
+            if (params.containsKey("firstName")) {
+                u.setFirstname(params.get("firstName"));
             }
-            u.setRole(params.get("role"));
-            u.setEmail(params.get("email"));
-            u.setGender(params.get("gender"));
+            if (params.containsKey("lastName")) {
+                u.setLastname(params.get("lastName"));
+            }
+            if (params.containsKey("address")) {
+                u.setRole(params.get("address"));
+            }
+            if (params.containsKey("email")) {
+                u.setEmail(params.get("email"));
+            }
+            if (params.containsKey("phone")) {
+                u.setEmail(params.get("phone"));
+            }
+            if (params.containsKey("dateOfBirth")) {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                try {
+                    Date date = formatter.parse(params.get("dateOfBirth"));
+                    u.setDateOfBirth(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return ResponseEntity.badRequest().body("Dinh dang ngay sai");
+                }
+            }
+            if (params.containsKey("gender")) {
+                u.setGender(params.get("gender"));
+            }
             if (file != null && file.length > 0) {
                 u.setFile(file[0]);
             }
             this.userService.updateUser(u);
+            return ResponseEntity.ok("User updated successfully");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
 
     @PostMapping("/login")
@@ -163,5 +192,44 @@ public class ApiUserController {
                 u.getCoin()
         );
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    ///APi đổi mk truyền 
+//    {
+//    "oldPassword": "old_password_value",
+//    "newPassword": "new_password_value"
+//    }
+//    
+//    200 OK: Khi mật khẩu được thay đổi thành công.
+//    400 Bad Request: Khi không có mật khẩu cũ hoặc mật khẩu mới trong request body.
+//    401 Unauthorized: Khi mật khẩu cũ không đúng.
+    @PostMapping(path = "/users/change-password/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    public ResponseEntity<String> changePassword(
+            @PathVariable("userId") int userId,
+            @RequestBody Map<String, String> request) {
+
+        // Log thông tin nhận được
+        System.out.println("UserId: " + userId);
+        System.out.println("Request: " + request);
+
+        String oldPassword = request.get("oldPassword");
+        String newPassword = request.get("newPassword");
+
+        if (oldPassword == null || oldPassword.isEmpty()) {
+            return ResponseEntity.badRequest().body("Old password is missing");
+        }
+
+        if (newPassword == null || newPassword.isEmpty()) {
+            return ResponseEntity.badRequest().body("New password is missing");
+        }
+
+        boolean isChanged = userService.changePassword(userId, oldPassword, newPassword);
+
+        if (isChanged) {
+            return ResponseEntity.ok("Password changed successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Old password is incorrect");
+        }
     }
 }
