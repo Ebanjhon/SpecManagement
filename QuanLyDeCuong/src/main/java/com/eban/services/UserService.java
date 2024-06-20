@@ -33,4 +33,8 @@ public interface UserService extends UserDetailsService {
 
     void updateUserWhenBuySpec(User user); // Xy lý nap coin
 
+    boolean changePassword(int userId, String oldPassword, String newPassword);
+
+    boolean checkPassword(User user, String rawPassword);//check pass cũ 
+
 }

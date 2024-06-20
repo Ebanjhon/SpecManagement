@@ -4,6 +4,7 @@
  */
 package com.eban.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
@@ -49,6 +50,7 @@ public class Specgrande implements Serializable {
     private Gradingsheet grandeID;
     @JoinColumn(name = "specifiID", referencedColumnName = "idSpec")
     @ManyToOne
+    @JsonIgnore
     private Specification specifiID;
 
     public Specgrande() {

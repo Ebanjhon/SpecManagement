@@ -31,13 +31,15 @@ public interface SpecService {
 
     List<Specification> getSpecsBySubjectId(int subjectId);
 
-    SearchResultDTO<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId);
-    
+    SearchResultDTO<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId, Integer idCourse);
+
     Gradingsheet findGradingSheetByName(String name);
+
     void addGradingSheet(Gradingsheet gradingsheet);
+
     void addSpecgrande(Specgrande specgrande);
+
     List<Specgrande> getSpecgrandeBySpecId(int id);
-    
     
 
 }
