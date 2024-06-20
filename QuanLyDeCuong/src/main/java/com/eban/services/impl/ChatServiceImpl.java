@@ -35,4 +35,9 @@ public class ChatServiceImpl implements ChatService {
         return chatRepo.findUsersByUsername(username);
     }
 
+    @Override
+    public Integer addChat(int[] userId) {
+        return this.chatRepo.addChat(userId);
+    }
+
 }

@@ -61,7 +61,6 @@ public class ApiSpecificationController {
 
     @GetMapping("/specifications")
     @CrossOrigin
-
     public ResponseEntity<List<Specification>> listSpec(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.specService.getListSpec(params), HttpStatus.OK);
     }

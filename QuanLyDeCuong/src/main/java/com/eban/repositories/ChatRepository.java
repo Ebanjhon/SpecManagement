@@ -16,6 +16,6 @@ public interface ChatRepository {
 
     List<RoomChatDTO> findAllChatRoomsWithUsers(Integer userId);
     List<ChatUserDTO> findUsersByUsername(String username);
-    
+    Integer addChat(int[] iduser);
 
 }

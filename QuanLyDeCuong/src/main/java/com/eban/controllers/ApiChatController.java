@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +41,8 @@ public class ApiChatController {
     }
 
     // API tìm người dùng theo username
-    @GetMapping("/users/searchusername")
+    @GetMapping("/searchusername")
+    @CrossOrigin
     public ResponseEntity<List<ChatUserDTO>> searchUsersByUsername(@RequestParam String username) {
         List<ChatUserDTO> users = chatService.findUsersByUsername(username);
         if (users == null || users.isEmpty()) {
@@ -48,4 +50,14 @@ public class ApiChatController {
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+    // api tạo phong chat
+    @PostMapping("/addchat")
+    @CrossOrigin
+    public ResponseEntity<Integer> addChatroom(@RequestParam("userId1") int userId1, @RequestParam("userId2") int userId2) {
+        int[] iduser = {userId1, userId2};
+        int roomId = this.chatService.addChat(iduser);
+        return new ResponseEntity<>(roomId,HttpStatus.CREATED);
+    }
+
 }

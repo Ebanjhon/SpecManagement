@@ -18,6 +18,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.eban.DTO.SearchChatDTO;
+import com.eban.DTO.UserDTO;
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
@@ -107,8 +109,5 @@ public class UserServiceImpl implements UserService {
         
         this.userRepo.updateUserWhenBuySpec(user);
     }
-    
-    
-    
 
 }

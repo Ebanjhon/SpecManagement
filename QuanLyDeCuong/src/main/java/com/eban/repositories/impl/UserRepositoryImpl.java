@@ -4,14 +4,19 @@
  */
 package com.eban.repositories.impl;
 
+import com.eban.DTO.SearchChatDTO;
+import com.eban.DTO.UserDTO;
+import com.eban.pojo.Chat;
 import com.eban.pojo.User;
 import com.eban.repositories.UserRepository;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -61,7 +66,6 @@ public class UserRepositoryImpl implements UserRepository {
         } else {
             return result.get(0);
         }
-//        return (User) q.getSingleResult();
     }
 
     @Override
@@ -87,13 +91,6 @@ public class UserRepositoryImpl implements UserRepository {
         session.update(user);
     }
 
-//    @Override
-//    public User getUserById(int id) {
-//        Session session = this.factory.getObject().getCurrentSession();
-//        Query q = session.createNamedQuery("User.findByIdUser");
-//        q.setParameter("idUser", id);
-//        return (User) q.getSingleResult();
-//    }
     @Override
     public User getUserById(int id) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -109,7 +106,7 @@ public class UserRepositoryImpl implements UserRepository {
         User user = session.get(User.class, id);
         if (user != null) {
             int currentcoin = user.getCoin();
-            user.setCoin(currentcoin + coin );
+            user.setCoin(currentcoin + coin);
             session.update(user);
         } else {
             throw new RuntimeException("User not found for ID: " + id);

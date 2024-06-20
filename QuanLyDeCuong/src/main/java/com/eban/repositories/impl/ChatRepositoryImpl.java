@@ -99,4 +99,32 @@ public class ChatRepositoryImpl implements ChatRepository {
         dto.setAvatar(user.getAvatar());
         return dto;
     }
+
+    @Override
+    public Integer addChat(int[] iduser) { // truyền 2 id user để tạo chat
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        // tạo phòng 
+        Roomchat room = new Roomchat();
+        room.setNameRoom("eban chat");
+        session.save(room);
+        // lấy id room
+        int idRoom = room.getIdRoomChat();
+
+        // lấy user
+        List<User> users = new ArrayList<>();
+        for (int id : iduser) {
+            User user = session.get(User.class, id);
+            if (user != null) {
+                users.add(user);
+            }
+        }
+        // tạo chat 
+        for (User u : users) {
+            Chat chat = new Chat();
+            chat.setRoomID(room);
+            chat.setUserID(u);
+            session.save(chat);
+        }
+        return idRoom;
+    }
 }

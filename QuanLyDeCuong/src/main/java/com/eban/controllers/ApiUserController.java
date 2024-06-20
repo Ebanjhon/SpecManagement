@@ -5,11 +5,14 @@
 package com.eban.controllers;
 
 import com.eban.DTO.CurrentUserDTO;
+import com.eban.DTO.SearchChatDTO;
+import com.eban.DTO.UserDTO;
 import com.eban.components.EmailUtil;
 import com.eban.components.JwtService;
 import com.eban.pojo.User;
 import com.eban.services.UserService;
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,8 +46,7 @@ public class ApiUserController {
     private UserService userService;
     @Autowired
     private JwtService jwtService;
-// api tạo user
-
+// api tao user
     @PostMapping(path = "/users/", consumes = {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE
@@ -52,10 +54,9 @@ public class ApiUserController {
     @CrossOrigin
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
-        if (this.userService.getUserByUsername(params.get("username")) == null) {
-            return new ResponseEntity<>("Tài khoản đã tồn tại!", HttpStatus.BAD_REQUEST);
+        if (this.userService.getUserByUsername(params.get("username")) != null) {
+            return new ResponseEntity<>("Tên người dùng đã có sẳn!", HttpStatus.BAD_REQUEST);
         }
-
         User u = new User();
         u.setFirstname(params.get("firstName"));
         u.setLastname(params.get("lastName"));
@@ -69,24 +70,24 @@ public class ApiUserController {
         if (file.length > 0) {
             u.setFile(file[0]);
         }
-        return new ResponseEntity<>(u.getAvatar(), HttpStatus.CREATED);
 
-//        this.userService.addUser(u);
+        this.userService.addUser(u);
+
         // Gửi email thông báo
-//        String to = u.getEmail();
-//        String subject = "Tạo tài khoản thành công";
-//        String text = "<p>Chào " + u.getFirstname() + " " + u.getLastname() + ",</p>"
-//                + "<p>Tài khoản của bạn đã được tạo thành công với thông tin như sau:</p>"
-//                + "<ul>"
-//                + "<li>Tên đăng nhập: " + u.getUsername() + "</li>"
-//                + "<li>Email: " + u.getEmail() + "</li>"
-//                + "<li>Vai trò: " + u.getRole() + "</li>"
-//                + "</ul>"
-//                + "<p>Đề nghị cập nhât những thông tin còn thiếu sau khi đăng nhâp.</p>"
-//                + "<p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>";
-//
-//        EmailUtil.sendEmail(to, subject, text);
-//        return new ResponseEntity<>("Tạo tài khoản thành công!", HttpStatus.CREATED);
+        String to = u.getEmail();
+        String subject = "Tạo tài khoản thành công";
+        String text = "<p>Chào " + u.getFirstname() + " " + u.getLastname() + ",</p>"
+                + "<p>Tài khoản của bạn đã được tạo thành công với thông tin như sau:</p>"
+                + "<ul>"
+                + "<li>Tên đăng nhập: " + u.getUsername() + "</li>"
+                + "<li>Email: " + u.getEmail() + "</li>"
+                + "<li>Vai trò: " + u.getRole() + "</li>"
+                + "</ul>"
+                + "<p>Đề nghị cập nhât những thông tin còn thiếu sau khi đăng nhâp.</p>"
+                + "<p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>";
+
+        EmailUtil.sendEmail(to, subject, text);
+        return new ResponseEntity<>("tạo tài khoản thành công", HttpStatus.CREATED);
     }
 
     // Chỉnh sửa User 
@@ -170,4 +171,5 @@ public class ApiUserController {
         );
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
 }

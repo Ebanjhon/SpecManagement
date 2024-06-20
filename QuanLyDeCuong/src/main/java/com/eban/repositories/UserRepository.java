@@ -4,6 +4,7 @@
  */
 package com.eban.repositories;
 
+import com.eban.DTO.SearchChatDTO;
 import com.eban.pojo.User;
 import java.util.List;
 
@@ -28,4 +29,5 @@ public interface UserRepository {
     void updateUserCoin(int id, int coin);
 
     void updateUserWhenBuySpec(User user);
+
 }

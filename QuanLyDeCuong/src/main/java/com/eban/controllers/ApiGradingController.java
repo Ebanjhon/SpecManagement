@@ -30,7 +30,7 @@ public class ApiGradingController {
 
     @Autowired
     private GrandingSheetService gradingService;
-
+// lấy tất cả các 
     @GetMapping("/gradingsheets")
     @CrossOrigin // cho phép tất cả các domain truy cập
     public ResponseEntity<List<Gradingsheet>> listGradingSheet() {
