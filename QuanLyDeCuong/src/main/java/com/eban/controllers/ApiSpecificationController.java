@@ -181,10 +181,11 @@ public class ApiSpecificationController {
     public ResponseEntity<SearchResultDTO<SpecificationDTO>> searchSpecifications(
             @RequestParam(required = false) String nameSpec,
             @RequestParam(required = false) Integer credit,
+            @RequestParam(required = false) Integer idCourse,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) String teacherName,
             @RequestParam(required = false) Integer subjectId) {
-        SearchResultDTO<SpecificationDTO> searchResult = this.specService.searchSpecifications(nameSpec, credit, page, teacherName, subjectId);
+        SearchResultDTO<SpecificationDTO> searchResult = this.specService.searchSpecifications(nameSpec, credit, page, teacherName, subjectId, idCourse);
         if (searchResult.getResults().isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -220,5 +221,5 @@ public class ApiSpecificationController {
         this.oderdcService.addOderdc(oderdc);
         return ResponseEntity.ok("Buy Spec successfully");
     }
-
+    
 }

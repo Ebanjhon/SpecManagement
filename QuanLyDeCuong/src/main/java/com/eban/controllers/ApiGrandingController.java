@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class GrandingController {
+public class ApiGrandingController {
 
     @Autowired
     private GradingService gradingService;
@@ -41,7 +41,7 @@ public class GrandingController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin
-    public void addCommentToSpec(@RequestParam Map<String, String> params) {
+    public void addGrad(@RequestParam Map<String, String> params) {
         Gradingsheet grand = new Gradingsheet();
         grand.setNameColumn(params.get("nameColumn"));
 
