@@ -11,12 +11,12 @@
 <!DOCTYPE html>
 
 <h1>Welcom to my fucking website!🖕<h1>
-         <form action="/QuanLyDeCuong/api/submitOrder" method="post">
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount" required><br><br>
-        <label for="orderInfo">Order Info:</label>
-        <input type="text" id="orderInfo" name="orderInfo" required><br><br>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <input type="submit" value="Pay with VNPay">
-    </form>
+        <form action="/QuanLyDeCuong/api/submitOrder" method="post">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" required><br><br>
+            <label for="orderInfo">Order Info:</label>
+            <input type="text" id="orderInfo" name="orderInfo" required><br><br>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <input type="submit" value="Pay with VNPay">
+        </form>

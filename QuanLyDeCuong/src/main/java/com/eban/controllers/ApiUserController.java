@@ -213,9 +213,7 @@ public class ApiUserController {
 //    401 Unauthorized: Khi mật khẩu cũ không đúng.
     @PostMapping(path = "/users/change-password/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
-    public ResponseEntity<String> changePassword(
-            @PathVariable("userId") int userId,
-            @RequestBody Map<String, String> request) {
+    public ResponseEntity<String> changePassword(@PathVariable("userId") int userId,@RequestBody Map<String, String> request) {
 
         // Log thông tin nhận được
         System.out.println("UserId: " + userId);
@@ -235,7 +233,7 @@ public class ApiUserController {
         boolean isChanged = userService.changePassword(userId, oldPassword, newPassword);
 
         if (isChanged) {
-            return ResponseEntity.ok("Password changed successfully");
+            return new ResponseEntity<>("tạo thành công", HttpStatus.CREATED);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Old password is incorrect");
         }

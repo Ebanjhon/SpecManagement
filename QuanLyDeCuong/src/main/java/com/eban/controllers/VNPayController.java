@@ -1,15 +1,19 @@
 package com.eban.controllers;
 
+import com.eban.DTO.RoomChatDTO;
 import com.eban.pojo.Oderdc;
 import com.eban.services.VNPayService;
 import com.eban.services.UserService;
 import com.eban.pojo.User;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.logging.Logger;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @Controller
 @RequestMapping("/api")
@@ -24,12 +28,11 @@ public class VNPayController {
     private UserService userService;
 
     @PostMapping("/submitOrder")
-    public String submitOrder(@RequestParam("amount") int orderTotal,
-                              @RequestParam("username") String username,
-                              HttpServletRequest request) {
+    @CrossOrigin
+    public ResponseEntity<String> submitOrder(@RequestParam("amount") int orderTotal, @RequestParam("username") String username, HttpServletRequest request) {
         String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/QuanLyDeCuong";
         String vnpayUrl = vnPayService.createOrder(orderTotal, username, baseUrl); // truyền username dưới dạng orderInfo
-        return "redirect:" + vnpayUrl;
+        return new ResponseEntity<>(vnpayUrl,HttpStatus.OK);
     }
 
     @GetMapping("/vnpay-payment")
