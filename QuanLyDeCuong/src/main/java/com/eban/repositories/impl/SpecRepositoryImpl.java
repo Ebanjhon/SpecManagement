@@ -117,7 +117,7 @@ public class SpecRepositoryImpl implements SpecRepocitory {
     }
 
     @Override
-    public List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId, Integer idCourse) {
+    public List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId, Integer idCourse, Integer authorID) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder(); // Tạo Truy vấn SQL động
         CriteriaQuery<Specification> query = builder.createQuery(Specification.class); // Xác định đối tượng truy vấn 
@@ -133,6 +133,9 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         }
         if (teacherName != null && !teacherName.isEmpty()) {
             predicate = builder.and(predicate, builder.like(root.get("authorID").get("username").as(String.class), "%" + teacherName + "%"));
+        }
+        if (authorID != null) {
+            predicate = builder.and(predicate, builder.equal(root.get("authorID").get("idUser"), authorID));
         }
         if (idCourse != null) {
             Join<Specification, Coursestudy> courseJoin = root.join("coursestudySet");
@@ -156,7 +159,7 @@ public class SpecRepositoryImpl implements SpecRepocitory {
     }
 
     @Override
-    public long countSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId, Integer idCourse) {
+    public long countSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId, Integer idCourse, Integer authorID) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
@@ -176,7 +179,9 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         if (subjectId != null) {
             predicate = builder.and(predicate, builder.equal(root.get("subjectID").get("idSubject"), subjectId));
         }
-
+        if (authorID != null) {
+            predicate = builder.and(predicate, builder.equal(root.get("authorID").get("idUser"), authorID));
+        }
         if (idCourse != null) {
             Join<Specification, Coursestudy> courseJoin = root.join("coursestudySet");
             predicate = builder.and(predicate, builder.equal(courseJoin.get("idCourse"), idCourse));

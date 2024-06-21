@@ -71,6 +71,7 @@ public class ApiUserController {
         u.setEmail(params.get("email"));
         u.setGender(params.get("gender"));
         u.setActive(true);
+        u.setCoin(2);
         if (file.length > 0) {
             u.setFile(file[0]);
         }
@@ -235,7 +236,7 @@ public class ApiUserController {
         if (isChanged) {
             return new ResponseEntity<>("tạo thành công", HttpStatus.CREATED);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Old password is incorrect");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Old password is incorrect");
         }
     }
 }

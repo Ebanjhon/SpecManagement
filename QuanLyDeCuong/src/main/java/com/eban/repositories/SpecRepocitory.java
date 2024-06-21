@@ -22,8 +22,8 @@ public interface SpecRepocitory {
     boolean deleteSpec(int id);
     List<Specification> getSpecsBySubjectId(int subjectId);
 
-    public List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page ,String teacherName, Integer subjectId, Integer idCourse);
-    long countSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId, Integer idCourse);
+    public List<Specification> searchSpecifications(String nameSpec, Integer credit, Integer page ,String teacherName, Integer subjectId, Integer idCourse, Integer authorID);
+    long countSpecifications(String nameSpec, Integer credit, String teacherName, Integer subjectId, Integer idCourse, Integer authorID);
     Gradingsheet findGradingSheetByName(String name);
     void addGradingSheet(Gradingsheet gradingsheet);
     void addSpecgrande(Specgrande specgrande);

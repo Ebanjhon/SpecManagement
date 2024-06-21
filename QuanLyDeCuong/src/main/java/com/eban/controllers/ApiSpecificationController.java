@@ -122,7 +122,7 @@ public class ApiSpecificationController {
                 return new ResponseEntity<>("Invalid file format. Only .doc, .docx, and .pdf are allowed.", HttpStatus.BAD_REQUEST);
             }
         }
-        
+
         this.specService.addSpec(spec);
 
         //Cấu hình add Cot diem 
@@ -235,10 +235,11 @@ public class ApiSpecificationController {
             @RequestParam(required = false) String nameSpec,
             @RequestParam(required = false) Integer credit,
             @RequestParam(required = false) Integer idCourse,
+            @RequestParam(required = false) Integer authorID,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) String teacherName,
             @RequestParam(required = false) Integer subjectId) {
-        SearchResultDTO<SpecificationDTO> searchResult = this.specService.searchSpecifications(nameSpec, credit, page, teacherName, subjectId, idCourse);
+        SearchResultDTO<SpecificationDTO> searchResult = this.specService.searchSpecifications(nameSpec, credit, page, teacherName, subjectId, idCourse, authorID);
         if (searchResult.getResults().isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

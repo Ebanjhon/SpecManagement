@@ -31,7 +31,7 @@ public interface SpecService {
 
     List<Specification> getSpecsBySubjectId(int subjectId);
 
-    SearchResultDTO<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId, Integer idCourse);
+    SearchResultDTO<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId, Integer idCourse, Integer authorID);
 
     Gradingsheet findGradingSheetByName(String name);
 

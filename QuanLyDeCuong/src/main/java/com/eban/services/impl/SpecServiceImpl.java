@@ -145,15 +145,14 @@ public class SpecServiceImpl implements SpecService {
     }
 
     @Override
-    public SearchResultDTO<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId, Integer idCourse) {
-        List<Specification> specifications = this.specRepo.searchSpecifications(nameSpec, credit, page, teacherName, subjectId, idCourse);
+    public SearchResultDTO<SpecificationDTO> searchSpecifications(String nameSpec, Integer credit, Integer page, String teacherName, Integer subjectId, Integer idCourse, Integer authorID) {
+        List<Specification> specifications = this.specRepo.searchSpecifications(nameSpec, credit, page, teacherName, subjectId, idCourse, authorID);
         List<SpecificationDTO> specificationDTOs = new ArrayList<>();
-        long totalCount = this.specRepo.countSpecifications(nameSpec, credit, teacherName, subjectId , idCourse);
+        long totalCount = this.specRepo.countSpecifications(nameSpec, credit, teacherName, subjectId, idCourse, authorID);
         for (Specification specification : specifications) {
             specificationDTOs.add(toSpecificationDTO(specification));
         }
         return new SearchResultDTO<>(specificationDTOs, totalCount);
-
     }
 
     @Override
