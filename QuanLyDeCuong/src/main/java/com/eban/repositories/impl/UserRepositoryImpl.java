@@ -128,5 +128,11 @@ public class UserRepositoryImpl implements UserRepository {
         return q.getResultList();
 
     }
+    @Override
+    public void deleteUser(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        User user = this.getUserById(id);
+        session.delete(user);
+    }
 
 }

@@ -292,4 +292,11 @@ public class ApiUserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Old password is incorrect");
         }
     }
+
+    @GetMapping("/checkUserHasSpec")
+    @CrossOrigin
+    public ResponseEntity<Boolean> checkUserHasSpec(@RequestParam int userId, @RequestParam int specId) {
+        boolean hasBought = userService.hasUserBoughtSpec(userId, specId);
+        return new ResponseEntity<>(hasBought, HttpStatus.OK);
+    }
 }

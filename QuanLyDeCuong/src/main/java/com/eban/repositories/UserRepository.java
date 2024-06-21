@@ -32,4 +32,6 @@ public interface UserRepository {
 
     List<User> getListUser();
 
+    void deleteUser(int id);
+
 }

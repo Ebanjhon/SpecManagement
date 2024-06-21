@@ -9,6 +9,7 @@ import com.eban.pojo.Specification;
 import com.eban.pojo.User;
 import com.eban.repositories.OderdcRepository;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -32,5 +33,17 @@ public class OderdcRepositoryImpl implements OderdcRepository {
         session.save(oderdc);
 
     }
+
+     @Override
+    public boolean existsByUserIdAndSpecId(int userId, int specId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        String hql = "SELECT COUNT(o) FROM Oderdc o WHERE o.userID.idUser = :userId AND o.specID.idSpec = :specId";
+        Query<Long> query = session.createQuery(hql, Long.class);
+        query.setParameter("userId", userId);
+        query.setParameter("specId", specId);
+        Long count = query.uniqueResult();
+        return count != null && count > 0;
+    }
+    
 
 }

@@ -15,5 +15,7 @@ import com.eban.pojo.User;
 public interface OderdcRepository {
 
     void addOderdc(Oderdc oderdc);
+
+    boolean existsByUserIdAndSpecId(int userId, int specId);
     
 }
