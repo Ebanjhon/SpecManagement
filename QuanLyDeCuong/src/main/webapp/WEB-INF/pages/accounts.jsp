@@ -12,7 +12,7 @@
 <head>
     <title>Tạo tài khoản</title>
     <style>
-        .container {
+        .container-account {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -55,7 +55,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container-account">
         <h1>TẠO TÀI KHOẢN THEO YÊU CẦU NGƯỜI DÙNG</h1>
         <form id="createUserForm" class="form-container" enctype="multipart/form-data">
             <label for="firstName">Họ:</label>

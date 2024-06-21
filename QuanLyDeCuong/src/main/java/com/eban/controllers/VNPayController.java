@@ -79,7 +79,7 @@ public class VNPayController {
         if (paymentStatus == 1) {
             User user = userService.getUserByUsername(orderInfo); // Sử dụng username từ orderInfo
             if (user != null) {
-                int coins = Integer.parseInt(totalPrice) / 100; // Giả sử mỗi 100 VND = 1 coin
+                int coins = Integer.parseInt(totalPrice) / 1000; // Giả sử mỗi 100 VND = 1 coin
                 userService.updateUserCoin(user.getIdUser(), user.getCoin() + coins);
             } else {
                 logger.warning("User not found for username: " + orderInfo);

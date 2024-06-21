@@ -46,7 +46,7 @@ public class UserRepositoryImpl implements UserRepository {
         Root<User> root = query.from(User.class);
 
         // Add the condition to the query
-        query.select(root).where(builder.equal(root.get("role"), "Teacher"));
+        query.select(root).where(builder.equal(root.get("role"), "ROLE_TEACHER"));
 
         Query q = session.createQuery(query);
 
