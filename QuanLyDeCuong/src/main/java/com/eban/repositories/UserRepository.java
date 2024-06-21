@@ -30,4 +30,6 @@ public interface UserRepository {
 
     void updateUserWhenBuySpec(User user);
 
+    List<User> getListUser();
+
 }

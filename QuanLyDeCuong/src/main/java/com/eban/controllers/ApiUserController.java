@@ -118,7 +118,7 @@ public class ApiUserController {
                 u.setLastname(params.get("lastName"));
             }
             if (params.containsKey("address")) {
-                u.setRole(params.get("address"));
+                u.setAddress(params.get("address"));
             }
             if (params.containsKey("email")) {
                 u.setEmail(params.get("email"));

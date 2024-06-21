@@ -119,4 +119,14 @@ public class UserRepositoryImpl implements UserRepository {
         session.update(user);
     }
 
+    @Override
+    public List<User> getListUser() {
+        Session session = this.factory.getObject().getCurrentSession();
+
+        Query q = session.createNamedQuery("User.findAll");
+
+        return q.getResultList();
+
+    }
+
 }

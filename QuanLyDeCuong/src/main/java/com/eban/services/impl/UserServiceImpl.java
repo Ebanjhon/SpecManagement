@@ -77,10 +77,10 @@ public class UserServiceImpl implements UserService {
             this.userRepo.addUser(user);
         }
     }
-    
+
     @Override
-    public void addUserByAdmin(User user) {    
-            this.userRepo.addUser(user);
+    public void addUserByAdmin(User user) {
+        this.userRepo.addUser(user);
     }
 
     @Override
@@ -135,6 +135,11 @@ public class UserServiceImpl implements UserService {
 
         return passwordEncoder.matches(rawPassword, user.getPassword());//so sánh mk người dung nhap sau khi ma hoa voi mk db 
 
+    }
+
+    @Override
+    public List<User> getListUser() {
+         return this.userRepo.getListUser();
     }
 
 }

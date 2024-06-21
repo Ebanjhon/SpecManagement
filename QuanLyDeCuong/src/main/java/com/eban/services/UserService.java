@@ -19,6 +19,8 @@ public interface UserService extends UserDetailsService {
 
     List<User> getListTeacher();
 
+    List<User> getListUser();
+
     User getUserByUsername(String username);
 
     void addUser(User user);
