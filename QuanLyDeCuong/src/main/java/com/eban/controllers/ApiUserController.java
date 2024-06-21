@@ -124,7 +124,7 @@ public class ApiUserController {
                 u.setEmail(params.get("email"));
             }
             if (params.containsKey("phone")) {
-                u.setEmail(params.get("phone"));
+                u.setPhone(params.get("phone"));
             }
             if (params.containsKey("dateOfBirth")) {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -290,5 +290,12 @@ public class ApiUserController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Old password is incorrect");
         }
+    }
+
+    @GetMapping("/checkUserHasSpec")
+    @CrossOrigin
+    public ResponseEntity<Boolean> checkUserHasSpec(@RequestParam int userId, @RequestParam int specId) {
+        boolean hasBought = userService.hasUserBoughtSpec(userId, specId);
+        return new ResponseEntity<>(hasBought, HttpStatus.OK);
     }
 }

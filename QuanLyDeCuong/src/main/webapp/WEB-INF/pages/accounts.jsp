@@ -91,73 +91,86 @@
                     ${successMessage}
                 </c:if>
             </div>
+
+
+            <h2>DANH SÁCH TÀI KHOẢN TRÊN HỆ THỐNG </h2>
+
+
+            <!--danh sach-->
+            <table class="table table-striped">
+                <thead>
+                    <tr style="text-align: center">
+                        <th scope="col">ID</th>
+                        <th scope="col">UserNamm</th>
+                        <th scope="col">FristName</th>
+                        <th scope="col">LastName</th>
+                        <th scope="col">DateOfBirth</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Adress</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Avatar</th>
+
+                        <th scope="col">Coin</th>
+                        <!--<th scope="col">Xóa</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${users}" var="s">
+                        <tr style="text-align: center">
+                            <td>${s.idUser}</td>
+                            <td>${s.username}</td>
+                            <td>${s.firstname}</td>
+                            <td>${s.lastname}</td>
+                            <td><fmt:formatDate value="${s.dateOfBirth}" pattern="yyyy-MM-dd" /></td>
+                    <td>${s.gender}</td>
+                    <td>${s.email}</td>
+                    <td>${s.address}</td>
+                    <td>${s.phone}</td><!-- comment -->
+                    <td>${s.role}</td><!-- comment -->
+                    <td>${s.active}</td>
+                    <td>${s.avatar}</td>
+                    <td>${s.coin}</td>
+
+<!--                            <td>
+                                <form action="" method="post">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <a class="btn btn-danger" href="<c:url value="/deleteUser/"/>" type="submit" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                                </form>
+                            </td>-->
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+
+
+
+
+
         </div>
 
-        <!--danh sach-->
-        <table class="table table-striped">
-            <thead>
-                <tr style="text-align: center">
-                    <th scope="col">ID</th>
-                    <th scope="col">UserNamm</th>
-                    <th scope="col">FristName</th>
-                    <th scope="col">LastName</th>
-                    <th scope="col">DateOfBirth</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Adress</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Trạng thái</th>
-                    <th scope="col">Coin</th>
-                    <th scope="col">Xóa</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${specs}" var="s">
-                    <tr style="text-align: center">
-                        <td>${s.idSpec}</td>
-                        <td>${s.nameSpec}</td>
-                        <td>${s.authorID.firstname} ${s.authorID.lastname}</td>
-                        <td>${s.credit}</td>
-                        <td><button class="btn btn-outline-success">Xem</button></td>
-                        <td>${s.subjectID.nameSubject}</td>
-                        <td><fmt:formatDate value="${s.dateCreate}" pattern="yyyy-MM-dd" /></td>
-                        <td>${s.typeSpecID.nameType}</td>
-                        <td><button class="btn btn-outline-success">Tai ve</button></td>
-                        <td>${s.hoiDongID.idHoiDong}</td>
-                        <td>${s.status}</td>
-                        <td>
-                <form action="" method="post">
-                    <input type="hidden" name="_method" value="delete">
-                    <a class="btn btn-danger" href="<c:url value="/deleteSubject/"/>" type="submit" onclick="return confirm('Are you sure you want to delete this subject?')">Delete</a>
-                </form>
-            </td>
-        </tr>
-    </c:forEach>
-</tbody>
-</table>
 
 
+        <script>
+            document.getElementById('createUserForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                var formData = new FormData(this);
 
-
-<script>
-    document.getElementById('createUserForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-
-        fetch('/QuanLyDeCuong/api/users/createUserBy/', {
-            method: 'POST',
-            body: formData
-        })
-                .then(response => response.text())
-                .then(responseText => {
-                    document.getElementById('successMessage').style.display = 'block';
-                    document.getElementById('successMessage').innerText = responseText;
+                fetch('/QuanLyDeCuong/api/users/createUserBy/', {
+                    method: 'POST',
+                    body: formData
                 })
-                .catch(error => {
-                    alert('Có lỗi xảy ra: ' + error);
-                });
-    });
-</script>
-</body>
+                        .then(response => response.text())
+                        .then(responseText => {
+                            document.getElementById('successMessage').style.display = 'block';
+                            document.getElementById('successMessage').innerText = responseText;
+                        })
+                        .catch(error => {
+                            alert('Có lỗi xảy ra: ' + error);
+                        });
+            });
+        </script>
+    </body>
 </html>

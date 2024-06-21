@@ -20,6 +20,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.eban.DTO.SearchChatDTO;
 import com.eban.DTO.UserDTO;
+import com.eban.repositories.OderdcRepository;
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
@@ -38,6 +39,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepo;
+    
+    @Autowired
+    private OderdcRepository oderdcRepository;
+    
     @Autowired
     private Cloudinary cloudinary;
 
@@ -139,7 +144,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getListUser() {
-         return this.userRepo.getListUser();
+        return this.userRepo.getListUser();
     }
+
+    @Override
+    public void deleteUser(int id) {
+        this.userRepo.deleteUser(id);
+    }
+    @Override
+    public boolean hasUserBoughtSpec(int userId, int specId) {
+        return oderdcRepository.existsByUserIdAndSpecId(userId, specId);
+    }
+    
+    
 
 }

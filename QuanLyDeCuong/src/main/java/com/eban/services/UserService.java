@@ -41,4 +41,7 @@ public interface UserService extends UserDetailsService {
 
     boolean checkPassword(User user, String rawPassword);//check pass cũ 
 
+    void deleteUser(int id);
+    boolean hasUserBoughtSpec(int userId, int specId);
+
 }
