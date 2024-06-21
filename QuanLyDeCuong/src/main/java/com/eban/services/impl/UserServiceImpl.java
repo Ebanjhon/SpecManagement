@@ -76,7 +76,11 @@ public class UserServiceImpl implements UserService {
             }
             this.userRepo.addUser(user);
         }
-
+    }
+    
+    @Override
+    public void addUserByAdmin(User user) {    
+            this.userRepo.addUser(user);
     }
 
     @Override

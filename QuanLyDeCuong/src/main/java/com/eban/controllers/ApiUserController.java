@@ -17,11 +17,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -80,7 +82,7 @@ public class ApiUserController {
 
         // Gửi email thông báo
         String to = u.getEmail();
-        String subject = "Tạo tài khoản thành công";
+        String subject = "Tao tai khoan thanh cong ";
         String text = "<p>Chào " + u.getFirstname() + " " + u.getLastname() + ",</p>"
                 + "<p>Tài khoản của bạn đã được tạo thành công với thông tin như sau:</p>"
                 + "<ul>"
@@ -155,6 +157,54 @@ public class ApiUserController {
         }
 
         return new ResponseEntity<>("Thông tin đăng nhập không chính xác!", HttpStatus.BAD_REQUEST);
+    }
+
+    //API tạo user do admin tạo 
+    @PostMapping(path = "/users/createUserBy/", consumes = {
+        MediaType.APPLICATION_JSON_VALUE,
+        MediaType.MULTIPART_FORM_DATA_VALUE
+    })
+    @CrossOrigin
+    @ResponseStatus(HttpStatus.CREATED)
+    public String createUserByAmin(@RequestParam Map<String, String> params, @RequestPart(required = false) MultipartFile[] file, Model model) {
+        if (this.userService.getUserByUsername(params.get("username")) != null) {
+            model.addAttribute("error", "Tên người dùng đã có sẵn!");
+            return "UsernameD da ton tai";
+        }
+        User u = new User();
+        u.setFirstname(params.get("firstName"));
+        u.setLastname(params.get("lastName"));
+        u.setUsername(params.get("username"));
+        String password = RandomStringUtils.randomAlphanumeric(8);
+        u.setPassword(this.passswordEncoder.encode(password));
+        u.setRole(params.get("role"));
+        u.setEmail(params.get("email"));
+        u.setGender(params.get("gender"));
+        u.setActive(true);
+        u.setCoin(2);
+        if (file != null && file.length > 0) {
+            u.setFile(file[0]);
+        }
+
+        this.userService.addUserByAdmin(u);
+
+        // Gửi email thông báo
+        String to = u.getEmail();
+        String subject = "Ban da duoc cap tai khoan thanh cong moi dang nhap vao he thong và cap nhat thong tin";
+        String text = "<p>Chào " + u.getFirstname() + " " + u.getLastname() + ",</p>"
+                + "<p>Tài khoản của bạn đã được tạo thành công với thông tin như sau:</p>"
+                + "<ul>"
+                + "<li>Tên đăng nhập: " + u.getUsername() + "</li>"
+                + "<li>Email: " + u.getEmail() + "</li>"
+                + "<li>Vai trò: " + u.getRole() + "</li>"
+                + "<li>Mật khẩu: " + password + "</li>"
+                + "</ul>"
+                + "<p>Đề nghị cập nhât mật khẩu và những thông tin còn thiếu sau khi đăng nhâp.</p>"
+                + "<p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>";
+
+        EmailUtil.sendEmail(to, subject, text);
+        model.addAttribute("successMessage", "Tạo tài khoản thành công!");
+        return "Tao tai khoan thanh cong";
     }
 
     // lấy thông tin user hiện tại
