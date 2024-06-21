@@ -131,15 +131,17 @@
                     <td>${s.phone}</td><!-- comment -->
                     <td>${s.role}</td><!-- comment -->
                     <td>${s.active}</td>
-                    <td>${s.avatar}</td>
+                    <td><c:if test="${s.avatar != null}">
+                            <img src="${s.avatar}" width="200" />
+                        </c:if>
                     <td>${s.coin}</td>
 
-<!--                            <td>
-                                <form action="" method="post">
-                                    <input type="hidden" name="_method" value="delete">
-                                    <a class="btn btn-danger" href="<c:url value="/deleteUser/"/>" type="submit" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
-                                </form>
-                            </td>-->
+                    <!--                            <td>
+                                                    <form action="" method="post">
+                                                        <input type="hidden" name="_method" value="delete">
+                                                        <a class="btn btn-danger" href="<c:url value="/deleteUser/"/>" type="submit" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                                                    </form>
+                                                </td>-->
                     </tr>
                 </c:forEach>
                 </tbody>
