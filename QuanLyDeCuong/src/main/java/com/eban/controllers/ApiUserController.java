@@ -123,8 +123,11 @@ public class ApiUserController {
             if (params.containsKey("email")) {
                 u.setEmail(params.get("email"));
             }
+            if (params.containsKey("email")) {
+                u.setEmail(params.get("email"));
+            }
             if (params.containsKey("phone")) {
-                u.setEmail(params.get("phone"));
+                u.setPhone(params.get("phone"));
             }
             if (params.containsKey("dateOfBirth")) {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
