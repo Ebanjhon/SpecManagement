@@ -61,3 +61,14 @@ public class ApiChatController {
     }
 
 }
+
+//
+//Thiên Tú
+//@Autowired
+//    private CommentService commService;
+//
+//    @GetMapping("/comments/")
+//    @CrossOrigin
+//    public ResponseEntity<String> list(@RequestParam Map<String, String> params) {
+//        return new ResponseEntity<>(params.get("productId"), HttpStatus.OK);
+//    }

@@ -23,6 +23,8 @@ public interface UserService extends UserDetailsService {
 
     void addUser(User user);
 
+    void addUserByAdmin(User user);
+
     boolean authUser(String username, String password);
 
     void updateUser(User user);

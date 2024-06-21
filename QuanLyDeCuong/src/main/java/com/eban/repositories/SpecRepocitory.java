@@ -28,4 +28,6 @@ public interface SpecRepocitory {
     void addGradingSheet(Gradingsheet gradingsheet);
     void addSpecgrande(Specgrande specgrande);
     List<Specgrande> getSpecgrandeBySpecId(int id);
+
+    List<Specification> getSpecsbyUserId(int userId);
 }

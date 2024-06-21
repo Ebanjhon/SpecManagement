@@ -40,6 +40,8 @@ public interface SpecService {
     void addSpecgrande(Specgrande specgrande);
 
     List<Specgrande> getSpecgrandeBySpecId(int id);
+
+    public List<Specification> getSpecsbyUserId(int userId);
     
 
 }

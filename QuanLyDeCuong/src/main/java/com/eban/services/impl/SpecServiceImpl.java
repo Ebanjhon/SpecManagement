@@ -175,4 +175,9 @@ public class SpecServiceImpl implements SpecService {
         return this.specRepo.getSpecgrandeBySpecId(id);
     }
 
+    @Override
+    public List<Specification> getSpecsbyUserId(int userId) {
+        return this.specRepo.getSpecsbyUserId(userId);
+    }
+
 }
