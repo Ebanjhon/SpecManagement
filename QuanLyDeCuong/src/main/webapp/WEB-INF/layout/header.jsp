@@ -24,7 +24,7 @@
                         <li><a class="dropdown-item" href="<c:url value="/specifications" />">Các đề cương</a></li>
                         <li><a class="dropdown-item" href="<c:url value="/subjects" />">Môn học</a></li>
                         <li><a class="dropdown-item" href="<c:url value="/courses" />">Khóa học</a></li>
-                        <li><a class="dropdown-item" href="<c:url value="/grandies" />">Cột điểm</a></li>
+                        <!--<li><a class="dropdown-item" href="<c:url value="/grandies" />">Cột điểm</a></li>-->
                         <li><a class="dropdown-item" href="<c:url value="/accounts" />">Quản lý tài khoản</a></li>
                     </ul>
                 </li>

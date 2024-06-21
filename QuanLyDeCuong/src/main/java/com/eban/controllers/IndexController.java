@@ -56,5 +56,7 @@ public class IndexController {
         model.addAttribute("specs", this.specService.getListSpec(params));
         model.addAttribute("teachers", this.userService.getListTeacher());
         model.addAttribute("spec", new Specification());
+//        model.addAttribute("user", new userService());
+
     }
 }
