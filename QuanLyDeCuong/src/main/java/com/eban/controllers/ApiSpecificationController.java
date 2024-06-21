@@ -275,5 +275,16 @@ public class ApiSpecificationController {
         this.oderdcService.addOderdc(oderdc);
         return ResponseEntity.ok("Buy Spec successfully");
     }
+    
+    
+    @GetMapping("/specifications/getSpecsbyUser/{userId}")
+    @CrossOrigin
+    public ResponseEntity<List<Specification>> getSpecsbyUserId(@PathVariable(value = "userId") int userId) {
+        List<Specification> specs = this.specService.getSpecsbyUserId(userId);
+        if (specs == null || specs.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(specs, HttpStatus.OK);
+    }
 
 }

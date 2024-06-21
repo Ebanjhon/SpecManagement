@@ -222,5 +222,20 @@ public class SpecRepositoryImpl implements SpecRepocitory {
         query.setParameter("specId", id);
         return query.getResultList();
     }
+////Lấy danh sách Spec của user đã mua 
+//    truy vấn phức tạp nên note lại 
+//    SELECT s: Chọn tất cả các đối tượng Specification (được gán bí danh là s).
+//FROM Specification s: Từ bảng Specification (được gán bí danh là s).
+//JOIN Oderdc o ON s.idSpec = o.specID.idSpec: Kết nối bảng Specification với bảng Oderdc (được gán bí danh là o) 
+//dựa trên điều kiện s.idSpec = o.specID.idSpec. Điều này có nghĩa là lấy tất cả các dòng mà idSpec của Specification bằng specID.idSpec của Oderdc.
+//WHERE o.userID.idUser =
+//: Thêm điều kiện để chỉ lấy các dòng mà userID.idUser trong bảng Oderdc bằng với tham số userId được truyền vào.
+    @Override
+    public List<Specification> getSpecsbyUserId(int userId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query query = session.createQuery("SELECT s FROM Specification s JOIN Oderdc o ON s.idSpec = o.specID.idSpec WHERE o.userID.idUser = :userId");
+        query.setParameter("userId", userId);
+        return query.getResultList();
+    }
 
 }
