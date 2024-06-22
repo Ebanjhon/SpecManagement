@@ -6,6 +6,7 @@ package com.eban.repositories.impl;
 
 import com.eban.pojo.Coursestudy;
 import com.eban.pojo.Gradingsheet;
+import com.eban.pojo.Oderdc;
 import com.eban.pojo.Specgrande;
 import com.eban.pojo.Specification;
 import com.eban.repositories.SpecRepocitory;
@@ -230,12 +231,31 @@ public class SpecRepositoryImpl implements SpecRepocitory {
 //dựa trên điều kiện s.idSpec = o.specID.idSpec. Điều này có nghĩa là lấy tất cả các dòng mà idSpec của Specification bằng specID.idSpec của Oderdc.
 //WHERE o.userID.idUser =
 //: Thêm điều kiện để chỉ lấy các dòng mà userID.idUser trong bảng Oderdc bằng với tham số userId được truyền vào.
+
     @Override
     public List<Specification> getSpecsbyUserId(int userId) {
         Session session = this.factory.getObject().getCurrentSession();
         Query query = session.createQuery("SELECT s FROM Specification s JOIN Oderdc o ON s.idSpec = o.specID.idSpec WHERE o.userID.idUser = :userId");
         query.setParameter("userId", userId);
         return query.getResultList();
+    }
+
+    @Override
+    public long countSpecificationsbyUserId(int userId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<Specification> specRoot = query.from(Specification.class);
+        Join<Specification, Oderdc> oderdcJoin = specRoot.join("oderdcSet"); // Assuming the association is named "oderdcSet"
+
+        // Build predicates
+        Predicate predicate = builder.equal(oderdcJoin.get("userID").get("idUser"), userId);
+
+        // Construct the query
+        query.select(builder.count(specRoot)).where(predicate);
+
+        // Execute the query and return the result
+        return session.createQuery(query).getSingleResult();
     }
 
 }

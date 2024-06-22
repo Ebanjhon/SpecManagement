@@ -279,12 +279,14 @@ public class ApiSpecificationController {
     
     @GetMapping("/specifications/getSpecsbyUser/{userId}")
     @CrossOrigin
-    public ResponseEntity<List<Specification>> getSpecsbyUserId(@PathVariable(value = "userId") int userId) {
-        List<Specification> specs = this.specService.getSpecsbyUserId(userId);
-        if (specs == null || specs.isEmpty()) {
+    public ResponseEntity<SearchResultDTO<SpecificationDTO>> getSpecsbyUserId(@PathVariable(value = "userId") int userId) {
+        SearchResultDTO<SpecificationDTO> Result  = this.specService.getSpecsbyUserId(userId);
+        if (Result.getResults().isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(specs, HttpStatus.OK);
+        return new ResponseEntity<>(Result, HttpStatus.OK);
     }
+    
+    
 
 }
