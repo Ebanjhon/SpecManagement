@@ -176,8 +176,14 @@ public class SpecServiceImpl implements SpecService {
     }
 
     @Override
-    public List<Specification> getSpecsbyUserId(int userId) {
-        return this.specRepo.getSpecsbyUserId(userId);
+    public SearchResultDTO<SpecificationDTO> getSpecsbyUserId(int userId) {
+        List<Specification> specifications = this.specRepo.getSpecsbyUserId(userId);
+        List<SpecificationDTO> specificationDTOs = new ArrayList<>();
+        long totalCount = this.specRepo.countSpecificationsbyUserId(userId);
+        for (Specification specification : specifications) {
+            specificationDTOs.add(toSpecificationDTO(specification));
+        }
+        return new SearchResultDTO<>(specificationDTOs, totalCount);
     }
 
 }

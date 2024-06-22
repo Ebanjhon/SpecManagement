@@ -41,7 +41,7 @@ public interface SpecService {
 
     List<Specgrande> getSpecgrandeBySpecId(int id);
 
-    public List<Specification> getSpecsbyUserId(int userId);
+    SearchResultDTO<SpecificationDTO> getSpecsbyUserId(int userId);
     
 
 }

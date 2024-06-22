@@ -30,4 +30,6 @@ public interface SpecRepocitory {
     List<Specgrande> getSpecgrandeBySpecId(int id);
 
     List<Specification> getSpecsbyUserId(int userId);
+
+   long countSpecificationsbyUserId(int userId);
 }
