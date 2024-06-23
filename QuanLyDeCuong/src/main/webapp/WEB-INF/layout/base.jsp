@@ -13,6 +13,8 @@
         <title>
             <tiles:insertAttribute name="title"/>
         </title>
+        <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/drosiimsz/image/upload/v1719122047/images_yq0x35.png">
+        <link rel="stylesheet" href="styles.css">
         <script src="https://kit.fontawesome.com/dd307a4d09.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -206,7 +206,7 @@ public class ApiSpecificationController {
 
         return ResponseEntity.ok("Specification updated successfully");
     }
-
+// xoa de cuong
     @DeleteMapping("/specifications/{idSpec}")
     @CrossOrigin
     public ResponseEntity<Void> deleteSpec(@PathVariable(value = "idSpec") int id) {

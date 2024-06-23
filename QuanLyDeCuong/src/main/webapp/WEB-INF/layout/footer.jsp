@@ -22,7 +22,7 @@
                     <p><a class="text-white">Java Spring MVC</a></p>
                     <p><a class="text-white">Reactjs</a></p>
                     <p><a class="text-white">MySQL Workbench</a></p>
-                    <p><a class="text-white">Netbeans 12.5</a></p>
+                    <p><a class="text-white">Netbeans 13-jdk14</a></p>
                 </div>
                 <hr class="w-100 clearfix d-md-none"/>
                 <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">

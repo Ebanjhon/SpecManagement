@@ -33,17 +33,5 @@ public class ApiSubjectController {
     public ResponseEntity<List<Subject>> listSubject() {
         return new ResponseEntity<>(this.subjectService.getSubjects(), HttpStatus.OK);
     }
-    
-//    @GetMapping("/test")
-//    @CrossOrigin // cho phép tất cả các domain truy cập
-//    public ResponseEntity<String> test(@RequestParam Map<String, String> params) {
-//        String testValue = params.get("test");
-//        
-//        if (testValue != null) {
-//            return new ResponseEntity<>(testValue, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>("Tham số 'test' không tồn tại", HttpStatus.BAD_REQUEST);
-//        }
-//    }
 
 }

@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 
 <div style="display: flex;flex-direction: column ; align-items: center; width: 100%">
-    <h3>Them Mon hoc</h3>
+    <h3>Thêm môn học</h3>
 
     <c:url value="/subjects" var="action" />
     <form:form method="post" action="${action}" modelAttribute="sub" style="width: 100%" accept-charset="UTF-8">

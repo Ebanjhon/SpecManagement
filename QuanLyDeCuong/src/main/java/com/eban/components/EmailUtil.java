@@ -28,14 +28,14 @@ public class EmailUtil {
         // Xác thực email
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-                return new javax.mail.PasswordAuthentication("2151010218mau@ou.edu.vn", "testjavamail@123");
+                return new javax.mail.PasswordAuthentication("2151010458eban@ou.edu.vn", "241946477");
             }
         });
 
         try {
             // Tạo email message
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("2151010218mau@ou.edu.vn"));
+            message.setFrom(new InternetAddress("2151010458eban@ou.edu.vn"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(subject);
             message.setContent(content, "text/html; charset=UTF-8");//Định dạng HTML cho đẹp 

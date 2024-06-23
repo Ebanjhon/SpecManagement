@@ -27,15 +27,6 @@ public class VNPayController {
     @Autowired
     private UserService userService;
 //
-//    @PostMapping("/submitOrder")
-//    public String submitOrder(@RequestParam("amount") int orderTotal,
-//            @RequestParam("username") String username,
-//            HttpServletRequest request) {
-//        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/QuanLyDeCuong";
-//        String vnpayUrl = vnPayService.createOrder(orderTotal, username, baseUrl); // truyền username dưới dạng orderInfo
-//        return "redirect:" + vnpayUrl;
-//    }
-
     @PostMapping("/submitOrder")
     @CrossOrigin
     public ResponseEntity<String> submitOrder(@RequestParam("amount") int orderTotal, @RequestParam("username") String username, HttpServletRequest request) {
@@ -62,26 +53,10 @@ public class VNPayController {
         model.addAttribute("paymentTime", paymentTime);
         model.addAttribute("transactionId", transactionId);
 
-//        String redirectUrl = "http://localhost:3000/update-user";
-
-//        if (paymentStatus == 1) {
-//            User user = userService.getUserByUsername(orderInfo); // Sử dụng username từ orderInfo
-//            if (user != null) {
-//                int coins = Integer.parseInt(totalPrice) / 100; // Giả sử mỗi 100 VND = 1 coin
-//                userService.updateUserCoin(user.getIdUser(), user.getCoin() + coins);
-//            } else {
-//                logger.warning("User not found for username: " + orderInfo);
-//            }
-//            redirectUrl += "ordersuccess"; // Thêm đường dẫn tới trang thành công
-//        } else {
-//            redirectUrl += "orderfail"; // Thêm đường dẫn tới trang thất bại
-//        }
-//
-//        return "redirect:" + redirectUrl; // Chuyển hướng người dùng tới trang bên ngoài
         if (paymentStatus == 1) {
             User user = userService.getUserByUsername(orderInfo); // Sử dụng username từ orderInfo
             if (user != null) {
-                int coins = Integer.parseInt(totalPrice) / 1000; // Giả sử mỗi 100 VND = 1 coin
+                int coins = Integer.parseInt(totalPrice) / 100000; // Giả sử mỗi 1000 VND = 1 coin
                 userService.updateUserCoin(user.getIdUser(), user.getCoin() + coins);
             } else {
                 logger.warning("User not found for username: " + orderInfo);

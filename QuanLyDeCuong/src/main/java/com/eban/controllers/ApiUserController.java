@@ -172,7 +172,7 @@ public class ApiUserController {
     public String createUserByAmin(@RequestParam Map<String, String> params, @RequestPart(required = false) MultipartFile[] file, Model model) {
         if (this.userService.getUserByUsername(params.get("username")) != null) {
             model.addAttribute("error", "Tên người dùng đã có sẵn!");
-            return "UsernameD da ton tai";
+            return "Ten nguoi dung da ton tai!";
         }
         User u = new User();
         u.setFirstname(params.get("firstName"));
